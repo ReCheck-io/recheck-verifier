@@ -1,0 +1,261 @@
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  form  label {
+    position: relative;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 2px 0 0 4px;
+    display:block;
+  }
+  
+  #container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:24px;
+    border-radius: 14px;
+    background: #FFFBFB;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+    max-width: 430px;
+  }
+
+  #chain {
+    display: flex;
+    justify-content: center;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+  
+  .receiverInput, .senderInput {
+    width: 100%;
+    padding: 12px 38px 12px 12px;
+    margin: 8px -2px;
+    font-size:14px;
+    border: 1px solid #ccc;
+    /* background: #F0F0F0; */
+    border-radius: 8px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    outline: none;
+  }
+  
+  .dropbox {
+    background: rgb(189, 214, 231);
+    color: dimgray;
+    padding: 10px 10px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 8px;
+    border-radius: 14px ;
+    border: dotted dimgray   ;
+  }
+  
+  .input-file {
+    opacity: 0; 
+    width: 100%;
+    max-height: 100px;
+    position: absolute;
+    cursor: pointer;  
+  }
+  
+  .dropbox:hover {
+    background: rgb(169, 192, 207);
+  }
+  
+  .dropbox p {
+    font-size: 1.2em;
+    margin-left: 52px;
+    word-wrap: break-word;
+    max-width: 90%;
+  }
+
+
+  .dropbox > img {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    left: 1em;
+    top: 30%;
+  }
+  
+  label > img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    cursor: pointer;
+    pointer-events: none;
+  }
+
+  .wrap {
+    display: flex;
+    flex: 1;
+    background-color: #f0f0f0;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .content {
+    display: flex;
+    flex: 1 1 60%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mm-btn {
+    outline: 0;
+    border: none;
+    background: #e0e1e2 none;
+    padding: 0.65em;
+    min-height: 14px;
+    background-color: rgba(204, 204, 204, 0.842);
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    right: 4px;
+    top: 36%;
+    border-radius: 8px;
+  }
+  
+  .mm-btn:hover {
+    background-color: rgb(204, 204, 204);
+  }
+  
+  .mm-btn > img {
+    width: 18px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  
+  .btn {
+    width: 100%;
+    min-width: 333px;
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    outline: 0;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    background: #e0e1e2 none;
+    padding: 0.65em 2em 0.65em 2em;
+    min-height: 48px;
+    background-color: #89ca02;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  
+  .btn:hover {
+    background-color: #7cb902;
+  }
+  
+  .btn:disabled {
+    opacity: 0.7;
+    background-color: #d0c4c4;
+    cursor: not-allowed;
+  }
+
+  .multiselect {
+    margin: 8px 0;
+  }
+  
+  .multiselect__tags {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  
+  .multiselect__placeholder {
+    color: dimgray;
+  }
+  
+  .option__desc {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  span.multiselect__option.multiselect__option--highlight {
+    background-color: rgba(0, 89, 145, 0.9);
+    transition: all 200ms;
+  }
+  
+  .multiselect__option.multiselect__option--highlight.multiselect__option--selected {
+    background-color: #ff6a6a;
+    transition: all 200ms;
+  }
+  
+  .multiselect__option.multiselect__option--selected {
+    background-color: #fff;
+  }
+  
+  .option__small {
+    font-size: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .content{
+      flex: 1 1 100%;
+      padding:8px
+    }
+
+    .timelineWrap {
+      display: flex;
+      flex: 1 1 1px;
+      visibility: hidden;
+      max-width:1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toggle-label-eth, .toggle-label-ae{
+      display: none;
+    }
+
+    .dragFileMsg{
+      display: none;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .btn {
+      min-width: 252px;
+    }
+
+    .multiselect__single {
+      margin-bottom: 0;
+    }
+
+    .multiselect__select {
+      height: 30px;
+      right: -4px;
+    }
+  
+    .multiselect__tags {
+      min-height: 20px;
+      padding: 3px 40px 3px 8px;
+    }
+  
+    #container{
+      max-width: 340px;
+    }
+  }
+  
+  @media (max-width: 360px) {
+      #container{
+        max-width: 300px;
+      }
+    }
