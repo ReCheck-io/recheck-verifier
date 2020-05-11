@@ -1,4 +1,4 @@
-# chain_searcher
+# ReCheck Transaction Verifier
 
 ## Project setup
 ```
