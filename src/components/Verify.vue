@@ -5,7 +5,7 @@
       <div id="container" @dragover.prevent @drop.prevent>
         <form action="">
           <div class="dropbox" @drop="handleFileDrop">
-            <img src="../assets/upload.png" alt="" />
+            <img src="../assets/file.svg" alt="" />
             <input
               type="file"
               multiple
@@ -52,7 +52,11 @@
             </multiselect>
             <!-- <pre class="language-json"><code>{{ value.title  }}</code></pre> -->
           </div>
-          <div v-if="actionType.actionType">
+          <div
+            v-if="
+              actionType.actionType && actionType.actionType !== 'bmd_register'
+            "
+          >
             <label>
               Enter sender ID:
               <input
@@ -68,10 +72,15 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
+              <div class="tooltip">Take the account from MetaMask!</div>
             </label>
           </div>
           <div
-            v-if="actionType.actionType !== 'upload' && actionType.actionType"
+            v-if="
+              actionType.actionType &&
+                actionType.actionType !== 'upload' &&
+                actionType.actionType !== 'bmd_register'
+            "
           >
             <label
               >Enter receiver ID:
@@ -88,6 +97,7 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
+              <div class="tooltip">Take the account from MetaMask!</div>
             </label>
           </div>
         </form>
@@ -96,8 +106,10 @@
           class="btn"
           :disabled="
             !actionType.actionType ||
-              senderId === '' ||
-              (actionType.actionType !== 'upload' && receiverId === '') ||
+              (actionType.actionType !== 'bmd_register' && senderId === '') ||
+              (actionType.actionType !== 'upload' &&
+                actionType.actionType !== 'bmd_register' &&
+                receiverId === '') ||
               !file.name
           "
           @click="searchOnChain"

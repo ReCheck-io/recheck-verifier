@@ -18,18 +18,23 @@
         </li>
         <li>
           <span>Select action type</span>
-          <p>You can verify if the file has been uploaded, shared or opened.</p>
+          <p>
+            You can verify if the file has been registered, uploaded, shared or
+            opened.
+          </p>
         </li>
         <li>
           <span>Enter sender ID</span>
           <p>
-            You must enter sender ID or use MetaMask button for yours.
+            If applicable you must enter sender ID or use MetaMask button for
+            yours.
           </p>
         </li>
         <li>
           <span>Enter receiver ID</span>
           <p>
-            If applicable you must enter receiver ID.
+            If applicable you must enter receiver ID or use MetaMask button for
+            yours.
           </p>
         </li>
       </ul>
@@ -74,7 +79,7 @@ ul {
 
 li {
   width: 250px;
-  height: 90px;
+  height: 95px;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #eee;

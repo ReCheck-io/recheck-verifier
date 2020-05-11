@@ -46,7 +46,8 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.719);
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,10 +60,11 @@ export default {
   display: flex;
   flex-direction: column;
   width: 80%;
-  max-width: 560px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   font-size: 14px;
+  border-radius: 14px;
 }
 
 .modal-header,
@@ -72,7 +74,11 @@ export default {
 }
 
 .modal-header h3 {
-  margin: 0;
+  margin: auto;
+}
+
+h2 {
+  margin: auto;
 }
 
 .modal-header {
@@ -85,6 +91,7 @@ export default {
   border-top: 1px solid #eeeeee;
   justify-content: center;
   font-size: 12px;
+  margin-right: 14px;
 }
 
 .modal-body {
@@ -92,6 +99,21 @@ export default {
   flex-direction: column;
   position: relative;
   padding: 26px;
+}
+
+.modal p {
+  display: flex;
+}
+
+.modal-text {
+  width: 80%;
+}
+
+.modal-info {
+  font-weight: bold;
+  width: 20%;
+  /* text-align: right;
+  margin-right: 14px; */
 }
 
 .btn-close {

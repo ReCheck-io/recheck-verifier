@@ -4,22 +4,56 @@
     <Verify />
     <viewer v-show="isModalVisible" @close="closeModal">
       <template #header>
-        <h3>Document Info</h3>
+        <h3>File Info</h3>
       </template>
       <template #body>
         <h2 v-if="errorData">{{ errorData }}</h2>
         <div v-if="chainData !== '' && userData !== ''">
-          <p>Sender ID: {{ userData.senderId }}</p>
-          <p v-if="userData.actionType !== 'upload' && userData.receiverId">
-            Receiver ID: {{ userData.receiverId }}
+          <p>
+            <span class="modal-info">Sender ID: </span>
+            <span
+              v-if="userData.actionType !== 'bmd_register' && userData.senderId"
+              class="modal-text"
+            >
+              {{ userData.senderId }}
+            </span>
+            <span v-else class="modal-text">
+              ak_2C62L8rWH86FQ1ySaZbeCXYZz96cHeJALTfgTbKhVBa4dK5qTK
+            </span>
           </p>
-          <p>Action type: {{ userData.actionType }}</p>
-          <p>Trail: {{ chainData.trailHash }}</p>
-          <p>Trail Signature: {{ chainData.trailHashSigHash }}</p>
-          <p>Date: {{ chainData.date }}</p>
-          <button type="button" class="downloadbtn" @click="downloadPdf">
+          <p
+            v-if="
+              userData.actionType !== 'upload' &&
+                userData.actionType !== 'bmd_register' &&
+                userData.receiverId
+            "
+          >
+            <span class="modal-info"> Receiver ID: </span>
+            <span class="modal-text"> {{ userData.receiverId }} </span>
+          </p>
+          <p>
+            <span class="modal-info"> Action type: </span>
+            <span class="modal-text"> {{ userData.actionType }} </span>
+          </p>
+          <p>
+            <span class="modal-info">Data hash: </span>
+            <span class="modal-text">{{ userData.dataId }} </span>
+          </p>
+          <p>
+            <span class="modal-info">Trail: </span>
+            <span class="modal-text">{{ chainData.trailHash }} </span>
+          </p>
+          <p>
+            <span class="modal-info"> Trail Signature: </span>
+            <span class="modal-text">{{ chainData.trailHashSigHash }} </span>
+          </p>
+          <p>
+            <span class="modal-info"> Date: </span>
+            <span class="modal-text"> {{ chainData.date }} </span>
+          </p>
+          <!-- <button type="button" class="downloadbtn" @click="downloadPdf">
             Download as PDF
-          </button>
+          </button> -->
         </div>
       </template>
     </viewer>

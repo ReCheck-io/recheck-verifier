@@ -10,14 +10,20 @@ export default {
   data() {
     return {
       file: {},
-      toggleValue: false,
+      toggleValue: true,
       web3: null,
       senderId: "",
       receiverId: "",
       actionType: "",
       payload: "",
-      currentNetwork: "eth",
+      currentNetwork: "ae",
       options: [
+        {
+          title: "Registered",
+          desc: "Registered to the chain",
+          img: "./register.svg",
+          actionType: "bmd_register"
+        },
         {
           title: "Shared",
           desc: "Shared with someone",
@@ -26,7 +32,7 @@ export default {
         },
         {
           title: "Uploaded",
-          desc: "Uploaded in chain",
+          desc: "Uploaded on chain",
           img: "./upload.svg",
           actionType: "upload"
         },
@@ -40,15 +46,13 @@ export default {
     };
   },
   mounted() {
-    // eventBus.$on("networkChange", res => {
-    //   if (res) {
-    //     this.currentNetwork = "ae";
-    //   } else if (!res) {
-    //     this.currentNetwork = "eth";
-    //   }
-    // });
     eventBus.$on("networkChange", res => {
-      this.currentNetwork = res;
+      if (res) {
+        this.currentNetwork = "eth";
+        !this.options[0];
+      } else if (!res) {
+        this.currentNetwork = "ae";
+      }
     });
     const dropArea = document.querySelector(".dropbox");
     dropArea.addEventListener("click", () => {
@@ -83,10 +87,12 @@ export default {
     },
     searchOnChain: async function() {
       const hash = this.generateHash();
+      console.log(hash);
       const userObj = {
         senderId: this.senderId,
         receiverId: this.receiverId,
-        actionType: this.actionType.actionType
+        actionType: this.actionType.actionType,
+        dataId: hash
       };
       if (hash !== null) {
         if (this.currentNetwork === "eth") {
@@ -96,16 +102,31 @@ export default {
         }
         eventBus.$emit("getUserdata", userObj);
       } else {
-        alert("Invalid hash!");
+        alert("incorrect public address!");
       }
     },
     generateHash() {
       const isUpload = this.actionType.actionType === "upload";
+      const isRegister = this.actionType.actionType === "bmd_register";
       const isValid = o => isValidAddress(this.currentNetwork, o);
       let docHash = getHash(getHash(this.payload));
-
+      console.log("dochash", docHash);
       let trailHash = "";
-      if (!isNullAny(this.actionType.actionType, this.senderId) && isUpload) {
+      if (!isNullAny(this.actionType.actionType) && isRegister) {
+        const senderId =
+          "ak_2C62L8rWH86FQ1ySaZbeCXYZz96cHeJALTfgTbKhVBa4dK5qTK";
+        if (isValid(senderId)) {
+          trailHash = getHash(
+            docHash + senderId + this.actionType.actionType + senderId
+          );
+          console.log("trailhash", trailHash);
+        } else {
+          return null;
+        }
+      } else if (
+        !isNullAny(this.actionType.actionType, this.senderId) &&
+        isUpload
+      ) {
         if (isValid(this.senderId)) {
           trailHash = getHash(
             docHash + this.senderId + this.actionType.actionType + this.senderId

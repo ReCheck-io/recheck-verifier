@@ -13,10 +13,10 @@ const web3 = {
     publicKey: "ak_2aFpvPdgDHdhcLUEtw8pykT3UDqK7R8R55aEE35aH9hB5Fx3jp",
     privateKey:
       "0032eea4216176c33b0f84cdb3eae52bfaa7dbd80826b17c36f31cbeee1f57a0cf3501ce4a2a2f39016496c1ec44ae6d251f411e07bbd6ac0895f66a4c3ea848",
-    gateway: "https://sdk-testnet.aepps.com",
+    gateway: "https://sdk-mainnet.aepps.com",
     contractPath: require("../contracts/AEContract.js").default,
     compiler: "https://compiler.aepps.com",
-    addressReadWrite: "ct_2ppRrHyepkedky9VDDmLeWZ6NoPnnRgV8VjeGw8pQ7AsQGpYt5",
+    addressReadWrite: "ct_2UNN5BC2MxMWMqxpVs2fZZkb8rc2kZ98L2p5TZUsPWWeArPX7W",
     defaultGas: 100000,
     defaultGasPrice: 1000000000,
     ttl: 55,
