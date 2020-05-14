@@ -1,3 +1,5 @@
+[![Website recheck.io](https://img.shields.io/badge/Website-recheck.io-brightgreen.svg)](https://recheck.io/) <a href="https://discord.gg/3KwFw72"><img src="https://img.shields.io/discord/675683560673509386?logo=discord" alt="chat on Discord"></a>
+
 # ReCheck Transaction Verifier
 An decentralized app that provides independent check of trail hashes on the blockchian
 
