@@ -9,22 +9,16 @@
       <template #body>
         <h2 v-if="errorData">{{ errorData }}</h2>
         <div v-if="chainData !== '' && userData !== ''">
-          <p>
+          <p v-if="userData.senderId">
             <span class="modal-info">Sender ID: </span>
-            <span
-              v-if="userData.actionType !== 'bmd_register' && userData.senderId"
-              class="modal-text"
-            >
+            <span class="modal-text">
               {{ userData.senderId }}
-            </span>
-            <span v-else class="modal-text">
-              ak_2C62L8rWH86FQ1ySaZbeCXYZz96cHeJALTfgTbKhVBa4dK5qTK
             </span>
           </p>
           <p
             v-if="
               userData.actionType !== 'upload' &&
-                userData.actionType !== 'bmd_register' &&
+                userData.actionType !== 'register' &&
                 userData.receiverId
             "
           >

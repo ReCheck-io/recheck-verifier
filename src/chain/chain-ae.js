@@ -65,7 +65,6 @@ export const checkTrailHash = async (trailHash) => {
 
   try {
     let contractArgs = [trailHash];
-    console.log("finalth",trailHash);
     const calledRecord = await contractObj.client.contractCallStatic(
       contractObj.contractSource,
       aeConfig.addressReadWrite,
@@ -96,7 +95,6 @@ export const checkTrailHash = async (trailHash) => {
     result.timestamp = decodedResult.timestamp / 1000;
     result.subRecords = decodedResult.subRecords;
     result.date = formatDate(result.timestamp);
-  console.log(decodedResult);
 
     if (result.trailHash.startsWith("0x0000000000")) {
       eventBus.$emit("checkSearch", "Doesn't exist" );

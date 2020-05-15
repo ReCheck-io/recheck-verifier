@@ -26,8 +26,7 @@
         <li>
           <span>Enter sender ID</span>
           <p>
-            If applicable you must enter sender ID or use MetaMask button for
-            yours.
+            You must enter sender ID or use MetaMask button for yours.
           </p>
         </li>
         <li>

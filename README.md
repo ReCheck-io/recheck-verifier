@@ -34,7 +34,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 3. By selecting action type you can verify if the file has been registered, uploaded, shared or opened.
 
-4. If applicable you must enter sender ID or use [MetaMask](https://metamask.io/) button for yours.
+4. You must enter sender ID or use [MetaMask](https://metamask.io/) button for yours.
 
 5. If applicable you must enter receiver ID or use [MetaMask](https://metamask.io/) button for yours.
 

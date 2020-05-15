@@ -52,11 +52,7 @@
             </multiselect>
             <!-- <pre class="language-json"><code>{{ value.title  }}</code></pre> -->
           </div>
-          <div
-            v-if="
-              actionType.actionType && actionType.actionType !== 'bmd_register'
-            "
-          >
+          <div v-if="actionType.actionType">
             <label>
               Enter sender ID:
               <input
@@ -79,7 +75,7 @@
             v-if="
               actionType.actionType &&
                 actionType.actionType !== 'upload' &&
-                actionType.actionType !== 'bmd_register'
+                actionType.actionType !== 'register'
             "
           >
             <label
@@ -106,9 +102,9 @@
           class="btn"
           :disabled="
             !actionType.actionType ||
-              (actionType.actionType !== 'bmd_register' && senderId === '') ||
+              senderId === '' ||
               (actionType.actionType !== 'upload' &&
-                actionType.actionType !== 'bmd_register' &&
+                actionType.actionType !== 'register' &&
                 receiverId === '') ||
               !file.name
           "
