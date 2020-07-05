@@ -5,9 +5,6 @@
         <slot name="header">
           This is the default title
         </slot>
-        <button type="button" class="btn-close" @click="close">
-          x
-        </button>
       </header>
       <section class="modal-body">
         <slot name="body">
@@ -16,7 +13,9 @@
       </section>
       <footer class="modal-footer">
         <slot name="footer">
-          <p>ReCheck BV</p>
+          <button type="button" class="btn-close" @click="close">
+            CLOSE
+          </button>
         </slot>
       </footer>
     </div>
@@ -64,41 +63,57 @@ export default {
   margin-left: auto;
   margin-right: auto;
   font-size: 14px;
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 .modal-header,
 .modal-footer {
-  padding: 15px;
+  padding: 12px;
   display: flex;
-}
-
-.modal-header h3 {
-  margin: auto;
-}
-
-h2 {
-  margin: auto;
 }
 
 .modal-header {
   border-bottom: 1px solid #eeeeee;
-  color: #002b49;
-  justify-content: space-between;
+}
+
+.svg_result {
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  /* box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1); */
+}
+
+.result_svg {
+  flex: 1 1 20%;
+  align-items: flex-end;
+}
+
+.result_title {
+  flex: 1 1 60%;
+  text-align: center;
+}
+
+.result_blank {
+  flex: 1 1 20%;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modal-footer {
   border-top: 1px solid #eeeeee;
   justify-content: center;
+  padding: 0;
   font-size: 12px;
-  margin-right: 14px;
 }
 
 .modal-body {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 26px;
+  padding: 26px 0;
 }
 
 .modal p {
@@ -112,40 +127,49 @@ h2 {
 .modal-info {
   font-weight: bold;
   width: 20%;
-  /* text-align: right;
-  margin-right: 14px; */
+  padding-left: 3%;
 }
 
 .btn-close {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+  outline: 0;
   border: none;
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 14px;
   font-weight: bold;
-  color: #002b49;
-  background: transparent;
+  padding: 0.65em 2em;
+  background-color: rgba(0, 89, 145, 0.9);
+  border: 1px solid rgba(0, 40, 65, 0.9);
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
-.btn-green {
-  color: white;
-  background: #002b49;
-  border: 1px solid #002b49;
-  border-radius: 2px;
+.btn-close:hover {
+  background-color: rgba(1, 73, 117, 0.9);
 }
 
 .downloadbtn {
-  align-self: flex-end;
-  width: 30%;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 20%;
   outline: 0;
   border: none;
   font-weight: bold;
   background: #e0e1e2 none;
-  padding: 0.65em 0.9em 0.65em;
+  padding: 0.5em 0.9em 0.65em 0.9em ;
   min-height: 24px;
   background-color: #002b49;
   color: #fff;
   cursor: pointer;
   border-radius: 0.5rem;
 }
+.downloadbtn:hover {
+  background-color: #001d31;
+  }
 
 @media (max-width: 768px) {
   .downloadbtn {
@@ -155,6 +179,7 @@ h2 {
   .modal {
     height: 90%;
     width: 90%;
+    overflow: scroll;
   }
 }
 </style>
