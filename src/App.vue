@@ -80,9 +80,9 @@
             <span class="modal-info"> Date: </span>
             <span class="modal-text"> {{ chainData.date }} </span>
           </p>
-          <!-- <button type="button" class="downloadbtn" @click="downloadPdf">
+          <button type="button" class="downloadbtn" @click="downloadPdf">
             Download as PDF
-          </button> -->
+          </button>
         </div>
       </template>
     </viewer>
