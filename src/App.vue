@@ -4,7 +4,7 @@
     <Verify />
     <viewer v-show="isModalVisible" @close="closeModal">
       <template #header>
-         <div class="result_svg">
+        <div class="result_svg">
           <p v-if="chainData !== '' && userData !== ''" class="svg_result">
             <svg
               width="64"
@@ -66,7 +66,7 @@
           </p>
           <p>
             <span class="modal-info">Data hash: </span>
-            <span class="modal-text">{{ userData.dataId }} </span>
+            <span class="modal-text">{{ chainData.recordId }} </span>
           </p>
           <p>
             <span class="modal-info">Trail: </span>
@@ -80,9 +80,9 @@
             <span class="modal-info"> Date: </span>
             <span class="modal-text"> {{ chainData.date }} </span>
           </p>
-          <button type="button" class="downloadbtn" @click="downloadPdf">
+          <!-- <button type="button" class="downloadbtn" @click="downloadPdf">
             Download as PDF
-          </button>
+          </button> -->
         </div>
       </template>
     </viewer>

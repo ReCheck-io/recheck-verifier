@@ -160,7 +160,7 @@ h2 {
   border: none;
   font-weight: bold;
   background: #e0e1e2 none;
-  padding: 0.5em 0.9em 0.65em 0.9em ;
+  padding: 0.5em 0.9em 0.65em 0.9em;
   min-height: 24px;
   background-color: #002b49;
   color: #fff;
@@ -169,7 +169,7 @@ h2 {
 }
 .downloadbtn:hover {
   background-color: #001d31;
-  }
+}
 
 @media (max-width: 768px) {
   .downloadbtn {

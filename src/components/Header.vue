@@ -2,7 +2,8 @@
   <header class="header">
     <div class="container">
       <a href="/" class="logo"
-        ><img src="../assets/recheck.png" class="logoImg" />Transaction verifier </a>
+        ><img src="../assets/recheck.png" class="logoImg" />Transaction verifier
+      </a>
       <label class="toggle">
         <input
           type="checkbox"
@@ -47,7 +48,6 @@ export default {
 </script>
 
 <style scoped>
-
 .header {
   width: 100%;
   height: 50px;
@@ -68,7 +68,7 @@ export default {
 
 .logo {
   font-size: 13px;
-  color: #DEE9F1;
+  color: #dee9f1;
   text-decoration: none;
   font-weight: 600;
 }
