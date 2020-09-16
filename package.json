@@ -1,7 +1,8 @@
 {
-  "name": "transaction-verifier",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.1.0",
+  "name": "transaction-verifier",
+  "author": "ReCheck BV <info@recheck.io>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
