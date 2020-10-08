@@ -140,7 +140,7 @@ h2 {
   font-size: 14px;
   font-weight: bold;
   padding: 0.65em 2em;
-  background-color: rgba(0, 89, 145, 0.9);
+  background-color: #04558a;
   border: 1px solid rgba(0, 40, 65, 0.9);
   color: white;
   cursor: pointer;
@@ -148,7 +148,7 @@ h2 {
 }
 
 .btn-close:hover {
-  background-color: rgba(1, 73, 117, 0.9);
+  background-color: #004774;
 }
 
 .downloadbtn {

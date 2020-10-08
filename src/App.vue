@@ -109,8 +109,29 @@ export default {
       isModalVisible: false,
       chainData: {},
       userData: {},
-      errorData: ""
+      errorData: "",
+      uriParams: null
     };
+  },
+  created() {
+    let newUri = "";
+    try {
+      newUri = decodeURI(window.location.href);
+    } catch (e) {
+      // catches a malformed URI
+      console.error(e);
+    }
+    let uri = newUri.split("?");
+    if (uri.length === 2) {
+      let vars = uri[1].split("&");
+      let getVars = {};
+      let tmp = "";
+      vars.forEach(function(v) {
+        tmp = v.split("=");
+        if (tmp.length === 2) getVars[tmp[0]] = tmp[1];
+      });
+      this.uriParams = getVars;
+    }
   },
   mounted() {
     eventBus.$on("checkSearch", res => {
@@ -130,6 +151,23 @@ export default {
         this.userData = res;
       }
     });
+    let children = this.$root.$children[0].$children[1];
+    let isValidAction = children.options.filter(option => {
+      return option.actionType === this.uriParams.actionType;
+    });
+
+    if (isValidAction) {
+      children.actionType = isValidAction[0];
+    }
+
+    setTimeout(() => {
+      for (const [key, value] of Object.entries(this.uriParams)) {
+        if (!["actionType"].includes(key)) {
+          document.getElementById(key).value = value;
+          children[key] = value;
+        }
+      }
+    }, 200);
   },
   methods: {
     showModal() {

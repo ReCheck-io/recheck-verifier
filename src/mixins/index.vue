@@ -16,6 +16,7 @@ export default {
       receiverId: "",
       actionType: "",
       payload: "",
+      docHash: "",
       currentNetwork: "ae",
       options: [
         {
@@ -73,6 +74,7 @@ export default {
         this.payload = btoa(rawData);
       }.bind(this);
       reader.readAsBinaryString(files);
+      document.getElementById("add-document-container").style.display = "none";
     },
     handleFileDrop(e) {
       let droppedFiles = e.dataTransfer.files[0];
@@ -84,6 +86,7 @@ export default {
         this.payload = btoa(rawData);
       }.bind(this);
       reader.readAsBinaryString(droppedFiles);
+      document.getElementById("add-document-container").style.display = "none";
     },
     searchOnChain: async function() {
       const hash = this.generateHash();
@@ -115,9 +118,21 @@ export default {
         !isNullAny(this.actionType.actionType, this.senderId)
       ) {
         if (isValid(this.senderId)) {
-          trailHash = getHash(
-            docHash + this.senderId + this.actionType.actionType + this.senderId
-          );
+          if (this.file.name) {
+            trailHash = getHash(
+              docHash +
+                this.senderId +
+                this.actionType.actionType +
+                this.senderId
+            );
+          } else {
+            trailHash = getHash(
+              this.docHash +
+                this.senderId +
+                this.actionType.actionType +
+                this.senderId
+            );
+          }
         } else {
           return null;
         }
@@ -131,12 +146,21 @@ export default {
         !isRegister
       ) {
         if (isValid(this.senderId) && isValid(this.receiverId)) {
-          trailHash = getHash(
-            docHash +
-              this.senderId +
-              this.actionType.actionType +
-              this.receiverId
-          );
+          if (this.file.name) {
+            trailHash = getHash(
+              docHash +
+                this.senderId +
+                this.actionType.actionType +
+                this.receiverId
+            );
+          } else {
+            trailHash = getHash(
+              this.docHash +
+                this.senderId +
+                this.actionType.actionType +
+                this.receiverId
+            );
+          }
         } else {
           return null;
         }
@@ -164,6 +188,13 @@ export default {
           console.error("User denied account access");
         }
       }
+    },
+    clearFileUpload() {
+      this.file = {};
+      this.payload = "";
+
+      document.getElementById("file-upload").value = "";
+      document.getElementById("add-document-container").style.display = "block";
     }
   }
 };

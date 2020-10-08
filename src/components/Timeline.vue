@@ -100,7 +100,7 @@ li::before {
   align-items: center;
   justify-content: center;
   border-radius: 99px;
-  background-color: rgba(0, 89, 145, 0.9);
+  background-color: #04558a;
   counter-increment: section;
   content: counters(section, ".");
   box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.25);

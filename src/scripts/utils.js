@@ -8,8 +8,11 @@ export const formatDate = val => {
     date.getMonth() + 1 < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
   const day = date.getDate();
   const year = date.getFullYear();
+  const hour = date.getUTCHours();
+  const minute = date.getUTCMinutes();
+  const second = date.getUTCSeconds();
 
-  const formattedDate = `${day}.${month}.${year}`;
+  const formattedDate = `${day}.${month}.${year}   ${hour}:${minute}:${second} UTC`;
 
   return formattedDate;
 };

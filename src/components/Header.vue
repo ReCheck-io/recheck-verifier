@@ -52,8 +52,7 @@ export default {
   width: 100%;
   height: 50px;
   display: flex;
-  /* margin-bottom: 32px; */
-  background-color: rgba(0, 89, 145, 0.9);
+  background-color: #04558a;
 }
 
 .container {
@@ -96,7 +95,7 @@ export default {
 }
 .toggle-switch:before {
   display: block;
-  background: #89ca02;
+  background: #57b440;
   border-radius: 12px;
   box-shadow: 0 0 0 1px rgba(0, 89, 145, 0.9);
   width: 85px;
@@ -171,7 +170,7 @@ export default {
 
 .logoImg {
   position: relative;
-  top: 4.9px;
+  top: 5px;
   width: 23px;
   height: 23px;
   vertical-align: bottom;
