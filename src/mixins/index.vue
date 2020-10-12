@@ -16,7 +16,7 @@ export default {
       receiverId: "",
       actionType: "",
       payload: "",
-      docHash: "",
+      docId: "",
       currentNetwork: "ae",
       options: [
         {
@@ -111,7 +111,7 @@ export default {
       const isUpload = this.actionType.actionType === "upload";
       const isRegister = this.actionType.actionType === "register";
       const isValid = o => isValidAddress(this.currentNetwork, o);
-      let docHash = getHash(getHash(this.payload));
+      let dataId = getHash(getHash(this.payload));
       let trailHash = "";
       if (
         (isUpload || isRegister) &&
@@ -120,14 +120,14 @@ export default {
         if (isValid(this.senderId)) {
           if (this.file.name) {
             trailHash = getHash(
-              docHash +
+              dataId +
                 this.senderId +
                 this.actionType.actionType +
                 this.senderId
             );
           } else {
             trailHash = getHash(
-              this.docHash +
+              this.docId +
                 this.senderId +
                 this.actionType.actionType +
                 this.senderId
@@ -148,14 +148,14 @@ export default {
         if (isValid(this.senderId) && isValid(this.receiverId)) {
           if (this.file.name) {
             trailHash = getHash(
-              docHash +
+              dataId +
                 this.senderId +
                 this.actionType.actionType +
                 this.receiverId
             );
           } else {
             trailHash = getHash(
-              this.docHash +
+              this.docId +
                 this.senderId +
                 this.actionType.actionType +
                 this.receiverId

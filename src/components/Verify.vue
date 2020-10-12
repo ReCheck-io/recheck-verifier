@@ -55,8 +55,8 @@
                 <input
                   class="docInput"
                   type="text"
-                  v-model="docHash"
-                  id="docHash"
+                  v-model="docId"
+                  id="docId"
                   placeholder="Document hash"
                 />
               </label>
