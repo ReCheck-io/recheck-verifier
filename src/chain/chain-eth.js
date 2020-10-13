@@ -30,6 +30,7 @@ export const getContractForPrivateKey = privateKey => {
     web3: web3
   };
 };
+
 export const checkTrailHash = trailHash => {
   let contractObj = getContractForPrivateKey(ethConfig.privateKey);
 

@@ -18,23 +18,7 @@
                 fill-rule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                 clip-rule="evenodd"
-              ></path>
-            </svg>
-          </p>
-          <p v-if="errorData" class="svg_result">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="#F89191"
-              stroke="none"
-              stroke-width="1.5"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clip-rule="evenodd"
-              ></path>
+              />
             </svg>
           </p>
         </div>
@@ -46,43 +30,38 @@
         <div v-if="chainData !== '' && userData !== ''">
           <p v-if="userData.senderId">
             <span class="modal-info">Sender ID: </span>
-            <span class="modal-text">
-              {{ userData.senderId }}
-            </span>
+            <span class="modal-text">{{ userData.senderId }}</span>
           </p>
           <p
             v-if="
-              userData.actionType !== 'upload' &&
-                userData.actionType !== 'register' &&
-                userData.receiverId
+              !['upload', 'register', 'sign', 'download', 'verify'].includes(
+                userData.actionType
+              ) && userData.recipientId
             "
           >
-            <span class="modal-info"> Receiver ID: </span>
-            <span class="modal-text"> {{ userData.receiverId }} </span>
+            <span class="modal-info">Recipient ID: </span>
+            <span class="modal-text">{{ userData.recipientId }}</span>
           </p>
           <p>
             <span class="modal-info"> Action type: </span>
-            <span class="modal-text"> {{ userData.actionType }} </span>
+            <span class="modal-text">{{ userData.actionType }}</span>
           </p>
           <p>
             <span class="modal-info">Data hash: </span>
-            <span class="modal-text">{{ chainData.recordId }} </span>
+            <span class="modal-text">{{ chainData.recordId }}</span>
           </p>
           <p>
             <span class="modal-info">Trail: </span>
-            <span class="modal-text">{{ chainData.trailHash }} </span>
+            <span class="modal-text">{{ chainData.trailHash }}</span>
           </p>
           <p>
-            <span class="modal-info"> Trail Signature: </span>
-            <span class="modal-text">{{ chainData.trailHashSigHash }} </span>
+            <span class="modal-info">Trail Signature: </span>
+            <span class="modal-text">{{ chainData.trailHashSigHash }}</span>
           </p>
           <p>
-            <span class="modal-info"> Date: </span>
-            <span class="modal-text"> {{ chainData.date }} </span>
+            <span class="modal-info">Date: </span>
+            <span class="modal-text">{{ chainData.date }}</span>
           </p>
-          <!-- <button type="button" class="downloadbtn" @click="downloadPdf">
-            Download as PDF
-          </button> -->
         </div>
       </template>
     </viewer>
@@ -93,8 +72,8 @@
 import Verify from "./components/Verify.vue";
 import Header from "./components/Header.vue";
 import viewer from "./components/modals/viewer.vue";
-import { generateDocument } from "./scripts/document";
 import { eventBus } from "./main";
+import { isNullAny } from "./scripts/utils";
 
 export default {
   name: "App",
@@ -104,6 +83,7 @@ export default {
     Header,
     viewer
   },
+
   data() {
     return {
       isModalVisible: false,
@@ -113,12 +93,12 @@ export default {
       uriParams: null
     };
   },
+
   created() {
     let newUri = "";
     try {
       newUri = decodeURI(window.location.href);
     } catch (e) {
-      // catches a malformed URI
       console.error(e);
     }
     let uri = newUri.split("?");
@@ -133,6 +113,7 @@ export default {
       this.uriParams = getVars;
     }
   },
+
   mounted() {
     eventBus.$on("checkSearch", res => {
       if (res) {
@@ -146,28 +127,47 @@ export default {
         }
       }
     });
-    eventBus.$on("getUserdata", res => {
+    eventBus.$on("getUserData", res => {
       if (res) {
         this.userData = res;
       }
     });
-    let children = this.$root.$children[0].$children[1];
-    let isValidAction = children.options.filter(option => {
-      return option.actionType === this.uriParams.actionType;
-    });
 
-    if (isValidAction) {
-      children.actionType = isValidAction[0];
-    }
+    if (!isNullAny(this.uriParams)) {
+      let children = this.$root.$children[0].$children[1];
+      let isValidAction = children.options.filter(option => {
+        return option.actionType === this.uriParams.type;
+      });
 
-    setTimeout(() => {
-      for (const [key, value] of Object.entries(this.uriParams)) {
-        if (!["actionType"].includes(key)) {
-          document.getElementById(key).value = value;
-          children[key] = value;
-        }
+      if (isValidAction) {
+        children.actionAttributes = isValidAction[0];
       }
-    }, 200);
+
+      const queryMap = {
+        isB: "isBeta",
+        net: "currentNetwork",
+        type: "actionType",
+        dId: "dataId",
+        sId: "senderId",
+        rId: "recipientId"
+      };
+
+      setTimeout(() => {
+        for (const [key, value] of Object.entries(this.uriParams)) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (queryMap.hasOwnProperty(key)) {
+            let currentKey = queryMap[key];
+
+            if (!["actionType"].includes(currentKey)) {
+              if (!isNullAny(document.getElementById(currentKey))) {
+                document.getElementById(currentKey).value = value;
+              }
+              children[currentKey] = value;
+            }
+          }
+        }
+      }, 200);
+    }
   },
   methods: {
     showModal() {
@@ -175,9 +175,6 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
-    },
-    downloadPdf() {
-      generateDocument(this.userData, this.chainData);
     }
   }
 };

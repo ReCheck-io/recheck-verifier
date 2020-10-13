@@ -1,11 +1,10 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 import { Universal } from "@aeternity/aepp-sdk";
 import chainConfig from "./config.js";
 import { eventBus } from "../main.js";
 import { formatDate } from "../scripts/utils";
 
-const aeConfig = chainConfig.ae;
+let aeConfig = chainConfig.ae;
 
 function fixHashPrefix(hash) {
   if (hash.startsWith("0x")) {
@@ -17,7 +16,7 @@ function fixHashPrefix(hash) {
   }
 }
 
-export const getContractForKeyPair = async keyPair => {
+const getContractForKeyPair = async keyPair => {
   if (!keyPair) {
     keyPair = {
       secretKey: aeConfig.privateKey,
@@ -25,19 +24,16 @@ export const getContractForKeyPair = async keyPair => {
     };
   }
 
-  
-
   let client = await Universal({
-    url: aeConfig.gateway, 
+    url: aeConfig.gateway,
     internalUrl: aeConfig.gateway,
+    networkId: aeConfig.networkId,
     keypair: keyPair,
-    networkId: aeConfig.networkId ? aeConfig.networkId : "ae_uat", //replace with ae_mainnet for mainnet
     nativeMode: true,
     compilerUrl: aeConfig.compiler
   });
 
-
-  let contractSource = aeConfig.contractPath
+  let contractSource = aeConfig.contractPath;
 
   return {
     account: keyPair.publicKey,
@@ -46,13 +42,18 @@ export const getContractForKeyPair = async keyPair => {
   };
 };
 
-export const checkTrailHash = async (trailHash) => {
+export const checkTrailHash = async (trailHash, isBeta = false) => {
+  if (isBeta) {
+    aeConfig = chainConfig.aeBeta;
+  }
+
   let contractObj = await getContractForKeyPair({
     secretKey: aeConfig.privateKey,
     publicKey: aeConfig.publicKey
   });
+
   trailHash = fixHashPrefix(trailHash);
-  
+
   let result = {
     recordId: "0",
     parentId: "0",
@@ -75,7 +76,7 @@ export const checkTrailHash = async (trailHash) => {
         gasPrice: aeConfig.defaultGasPrice
       }
     );
-    
+
     let decodedResult = await calledRecord.decode(
       "hash",
       "hash",
@@ -85,7 +86,6 @@ export const checkTrailHash = async (trailHash) => {
       "int",
       "int"
     );
-      
 
     result.recordId = fixHashPrefix(decodedResult.recordId);
     result.parentId = fixHashPrefix(decodedResult.parentId);
@@ -97,13 +97,11 @@ export const checkTrailHash = async (trailHash) => {
     result.date = formatDate(result.timestamp);
 
     if (result.trailHash.startsWith("0x0000000000")) {
-      eventBus.$emit("checkSearch", "Doesn't exist" );
+      eventBus.$emit("checkSearch", "Doesn't exist");
     } else {
       eventBus.$emit("checkSearch", result);
     }
   } catch (error) {
     console.log("ae_checkTrailHash ERROR", error);
   }
-
-  
 };

@@ -51,18 +51,18 @@
           <div>
             <div id="add-document-container">
               <label id="enter-documenthash-label">
-                Or enter document hash:
+                Or enter data identifier:
                 <input
                   class="docInput"
                   type="text"
-                  v-model="docId"
-                  id="docId"
-                  placeholder="Document hash"
+                  id="dataId"
+                  v-model="dataId"
+                  placeholder="Data Identifier"
                 />
               </label>
             </div>
             <multiselect
-              v-model="actionType"
+              v-model="actionAttributes"
               placeholder="Please select action type"
               label="title"
               track-by="title"
@@ -76,7 +76,6 @@
               <template slot="singleLabel" slot-scope="props">
                 <span class="option__desc">
                   <span class="option__title"> {{ props.option.title }} </span>
-                  <!-- <img class="option__image" :src="props.option.img" alt="" /> -->
                   <span class="option__small">{{ props.option.desc }}</span>
                 </span>
               </template>
@@ -84,13 +83,11 @@
                 <div class="option__desc">
                   <span class="option__title">{{ props.option.title }}</span>
                   <img class="option__image" :src="props.option.img" alt="" />
-                  <!-- <span class="option__small">{{ props.option.desc }}</span> -->
                 </div>
               </template>
             </multiselect>
-            <!-- <pre class="language-json"><code>{{ value.title  }}</code></pre> -->
           </div>
-          <div v-if="actionType.actionType">
+          <div v-if="actionAttributes.actionType">
             <label>
               Enter sender ID:
               <input
@@ -112,24 +109,24 @@
           </div>
           <div
             v-if="
-              actionType.actionType &&
-                actionType.actionType !== 'upload' &&
-                actionType.actionType !== 'register'
+              !['upload', 'register', 'sign', 'download', 'verify'].includes(
+                actionAttributes.actionType
+              )
             "
           >
-            <label
-              >Enter receiver ID:
+            <label>
+              Enter recipient ID:
               <input
                 class="receiverInput"
                 type="text"
-                v-model="receiverId"
-                id="receiverId"
+                v-model="recipientId"
+                id="recipientId"
                 placeholder="Receiver ID"
               />
               <button
                 type="button"
                 class="mm-btn"
-                @click="initWeb3('receiverId')"
+                @click="initWeb3('recipientId')"
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
@@ -141,12 +138,13 @@
           type="search"
           class="btn"
           :disabled="
-            !actionType.actionType ||
-              (!file.name && docHash === '') ||
+            !actionAttributes.actionType ||
+              (payload === '' && dataId === '') ||
               senderId === '' ||
-              (actionType.actionType !== 'upload' &&
-                actionType.actionType !== 'register' &&
-                receiverId === '')
+              (!['upload', 'register', 'sign', 'download', 'verify'].includes(
+                actionAttributes.actionType
+              ) &&
+                recipientId === '')
           "
           @click="searchOnChain"
         >

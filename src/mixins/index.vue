@@ -1,7 +1,12 @@
 <script>
 import Web3 from "web3";
 import { eventBus } from "../main";
-import { getHash, isValidAddress, isNullAny } from "../scripts/utils";
+import {
+  getHash,
+  isValidAddress,
+  isValidEmail,
+  isNullAny
+} from "../scripts/utils";
 
 const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
 const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
@@ -10,14 +15,16 @@ export default {
   data() {
     return {
       file: {},
+      isBeta: false,
       toggleValue: true,
-      web3: null,
-      senderId: "",
-      receiverId: "",
-      actionType: "",
-      payload: "",
-      docId: "",
       currentNetwork: "ae",
+      web3: null,
+
+      dataId: "",
+      senderId: "",
+      recipientId: "",
+      actionAttributes: "",
+      payload: "",
       options: [
         {
           title: "Registered",
@@ -26,22 +33,40 @@ export default {
           actionType: "register"
         },
         {
-          title: "Shared",
-          desc: "Shared with someone",
-          img: "./share.svg",
-          actionType: "share"
-        },
-        {
           title: "Uploaded",
           desc: "Uploaded on chain",
           img: "./upload.svg",
           actionType: "upload"
         },
         {
-          title: "Opened",
-          desc: "Opened by someone",
+          title: "Shared",
+          desc: "Shared with someone",
+          img: "./share.svg",
+          actionType: "share"
+        },
+        {
+          title: "Email Shared",
+          desc: "Shared with someone by email",
+          img: "./share.svg",
+          actionType: "email"
+        },
+        {
+          title: "Signed",
+          desc: "Signed by someone",
           img: "./eye.svg",
-          actionType: "open"
+          actionType: "sign"
+        },
+        {
+          title: "Downloaded",
+          desc: "Downloaded by someone",
+          img: "./eye.svg",
+          actionType: "download"
+        },
+        {
+          title: "Decrypted",
+          desc: "Decrypted by someone",
+          img: "./eye.svg",
+          actionType: "verify"
         }
       ]
     };
@@ -56,14 +81,21 @@ export default {
       }
     });
     const dropArea = document.querySelector(".dropbox");
-    dropArea.addEventListener("click", () => {
-      document.querySelector("#file-upload").click();
-    });
+    dropArea.addEventListener("click", () => this.openFilePicker());
   },
+
+  // beforeUpdate() {
+  //   const dropArea = document.querySelector(".dropbox");
+  //   dropArea.removeEventListener("click", () => this.openFilePicker());
+  // },
+
   methods: {
+    openFilePicker: () => document.querySelector("#file-upload").click(),
+
     customLabel({ title, desc }) {
       return `${title} – ${desc}`;
     },
+
     handleFileInput(e) {
       let files = e.target.files[0];
       let reader = new FileReader();
@@ -76,6 +108,7 @@ export default {
       reader.readAsBinaryString(files);
       document.getElementById("add-document-container").style.display = "none";
     },
+
     handleFileDrop(e) {
       let droppedFiles = e.dataTransfer.files[0];
       let reader = new FileReader();
@@ -88,88 +121,59 @@ export default {
       reader.readAsBinaryString(droppedFiles);
       document.getElementById("add-document-container").style.display = "none";
     },
+
     searchOnChain: async function() {
-      const hash = this.generateHash();
+      const trailHash = this.generateTrailHash();
+      console.log(trailHash);
       const userObj = {
         senderId: this.senderId,
-        receiverId: this.receiverId,
-        actionType: this.actionType.actionType,
-        dataId: hash
+        recipientId: this.recipientId,
+        actionType: this.actionAttributes.actionType
       };
-      if (hash !== null) {
+      if (!isNullAny(trailHash)) {
         if (this.currentNetwork === "eth") {
-          checkTrailHashETH(hash);
+          checkTrailHashETH(trailHash);
         } else if (this.currentNetwork === "ae") {
-          checkTrailHashAE(hash);
+          checkTrailHashAE(trailHash, this.isBeta);
         }
-        eventBus.$emit("getUserdata", userObj);
+        eventBus.$emit("getUserData", userObj);
       } else {
-        alert("incorrect public address!");
+        alert("Incorrect public address!");
       }
     },
-    generateHash() {
-      const isUpload = this.actionType.actionType === "upload";
-      const isRegister = this.actionType.actionType === "register";
-      const isValid = o => isValidAddress(this.currentNetwork, o);
-      let dataId = getHash(getHash(this.payload));
-      let trailHash = "";
+
+    generateTrailHash() {
+      const isValid = address => isValidAddress(this.currentNetwork, address);
+      const actionType = this.actionAttributes.actionType;
+
       if (
-        (isUpload || isRegister) &&
-        !isNullAny(this.actionType.actionType, this.senderId)
+        ["upload", "register", "sign", "download", "verify"].includes(
+          actionType
+        )
       ) {
-        if (isValid(this.senderId)) {
-          if (this.file.name) {
-            trailHash = getHash(
-              dataId +
-                this.senderId +
-                this.actionType.actionType +
-                this.senderId
-            );
-          } else {
-            trailHash = getHash(
-              this.docId +
-                this.senderId +
-                this.actionType.actionType +
-                this.senderId
-            );
-          }
-        } else {
-          return null;
-        }
-      } else if (
-        !isNullAny(
-          this.actionType.actionType,
-          this.senderId,
-          this.receiverId
-        ) &&
-        !isUpload &&
-        !isRegister
-      ) {
-        if (isValid(this.senderId) && isValid(this.receiverId)) {
-          if (this.file.name) {
-            trailHash = getHash(
-              dataId +
-                this.senderId +
-                this.actionType.actionType +
-                this.receiverId
-            );
-          } else {
-            trailHash = getHash(
-              this.docId +
-                this.senderId +
-                this.actionType.actionType +
-                this.receiverId
-            );
-          }
-        } else {
-          return null;
-        }
+        this.recipientId = this.senderId;
       }
+
+      const dataId = isNullAny(this.dataId)
+        ? getHash(getHash(this.payload))
+        : this.dataId;
+
+      if (
+        isNullAny(actionType, dataId) ||
+        !isValid(this.senderId) ||
+        (!isValid(this.recipientId) && !isValidEmail(this.recipientId))
+      ) {
+        return null;
+      }
+
+      let trailHash = getHash(
+        dataId + this.senderId + actionType + this.recipientId
+      );
 
       return trailHash;
     },
 
-    initWeb3: async function(input) {
+    initWeb3: async function(idType) {
       if (window.ethereum) {
         try {
           // Request account access
@@ -178,10 +182,10 @@ export default {
 
           this.web3 = window.web3;
           const currentWallet = await this.web3.eth.getAccounts();
-          if (input === "senderId") {
+          if (idType === "senderId") {
             this.senderId = currentWallet[0];
-          } else if (input === "receiverId") {
-            this.receiverId = currentWallet[0];
+          } else if (idType === "recipientId") {
+            this.recipientId = currentWallet[0];
           }
         } catch (error) {
           // User denied account access...
@@ -189,6 +193,7 @@ export default {
         }
       }
     },
+
     clearFileUpload() {
       this.file = {};
       this.payload = "";

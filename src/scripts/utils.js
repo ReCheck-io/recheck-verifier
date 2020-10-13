@@ -22,7 +22,7 @@ export function isNullAny(...args) {
     let current = args[i];
 
     if (
-      current == null || //element == null covers element === undefined
+      current == null || // element == null covers element === undefined
       // eslint-disable-next-line no-prototype-builtins
       (current.hasOwnProperty("length") && current.length === 0) || // has length and it's zero
       (current.constructor === Object && Object.keys(current).length === 0) || // is an Object and has no keys
@@ -42,8 +42,10 @@ export function isValidAddress(currentNetwork, address) {
         address
       );
     case "ae":
-      return new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(
-        address
+      return (
+        new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(
+          address
+        ) || new RegExp(`^re_[0-9a-zA-Z]{41,}$`).test(address)
       );
     default:
       return false;
@@ -53,3 +55,7 @@ export function isValidAddress(currentNetwork, address) {
 export const getHash = string => {
   return `0x${keccak256(string).toString("hex")}`;
 };
+
+export function isValidEmail(emailAddress) {
+  return /(.+)@(.+){2,}\.(.+){2,}/.test(emailAddress);
+}
