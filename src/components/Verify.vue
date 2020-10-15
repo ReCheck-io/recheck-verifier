@@ -109,9 +109,10 @@
           </div>
           <div
             v-if="
-              !['upload', 'register', 'sign', 'download', 'verify'].includes(
-                actionAttributes.actionType
-              )
+              actionAttributes.actionType &&
+                !['upload', 'register', 'sign', 'download', 'verify'].includes(
+                  actionAttributes.actionType
+                )
             "
           >
             <label>
@@ -121,7 +122,7 @@
                 type="text"
                 v-model="recipientId"
                 id="recipientId"
-                placeholder="Receiver ID"
+                placeholder="Recipient ID"
               />
               <button
                 type="button"

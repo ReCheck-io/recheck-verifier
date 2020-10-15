@@ -47,25 +47,25 @@ export default {
         {
           title: "Email Shared",
           desc: "Shared with someone by email",
-          img: "./share.svg",
+          img: "./mail-line.svg",
           actionType: "email"
         },
         {
           title: "Signed",
           desc: "Signed by someone",
-          img: "./eye.svg",
+          img: "./edit.svg",
           actionType: "sign"
         },
         {
           title: "Downloaded",
           desc: "Downloaded by someone",
-          img: "./eye.svg",
+          img: "./download.svg",
           actionType: "download"
         },
         {
           title: "Decrypted",
           desc: "Decrypted by someone",
-          img: "./eye.svg",
+          img: "./unlock.svg",
           actionType: "verify"
         }
       ]

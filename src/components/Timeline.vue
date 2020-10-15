@@ -30,9 +30,9 @@
           </p>
         </li>
         <li>
-          <span>Enter receiver ID</span>
+          <span>Enter recipient ID</span>
           <p>
-            If applicable you must enter receiver ID or use MetaMask button for
+            If applicable you must enter recipient ID or use MetaMask button for
             yours.
           </p>
         </li>
