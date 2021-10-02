@@ -81,7 +81,9 @@ export default {
       }
     });
     const dropArea = document.querySelector(".dropbox");
-    dropArea.addEventListener("click", () => this.openFilePicker());
+    dropArea !== null
+      ? dropArea.addEventListener("click", () => this.openFilePicker())
+      : "";
   },
 
   // beforeUpdate() {
