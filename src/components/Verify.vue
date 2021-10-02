@@ -110,9 +110,14 @@
           <div
             v-if="
               actionAttributes.actionType &&
-                !['upload', 'register', 'sign', 'download', 'verify'].includes(
-                  actionAttributes.actionType
-                )
+                ![
+                  'upload',
+                  'register',
+                  'sign',
+                  'download',
+                  'verify',
+                  'email'
+                ].includes(actionAttributes.actionType)
             "
           >
             <label>
@@ -123,6 +128,31 @@
                 v-model="recipientId"
                 id="recipientId"
                 placeholder="Recipient ID"
+              />
+              <button
+                type="button"
+                class="mm-btn"
+                @click="initWeb3('recipientId')"
+              >
+                <img src="../assets/mm.png" alt="" />
+              </button>
+              <div class="tooltip">Take the account from MetaMask!</div>
+            </label>
+          </div>
+          <div
+            v-if="
+              actionAttributes.actionType &&
+                ['email'].includes(actionAttributes.actionType)
+            "
+          >
+            <label>
+              Enter recipient Email:
+              <input
+                class="receiverInput"
+                type="email"
+                v-model="recipientId"
+                id="recipientId"
+                placeholder="Recipient Email"
               />
               <button
                 type="button"
