@@ -154,14 +154,6 @@
                 id="recipientId"
                 placeholder="Recipient Email"
               />
-              <button
-                type="button"
-                class="mm-btn"
-                @click="initWeb3('recipientId')"
-              >
-                <img src="../assets/mm.png" alt="" />
-              </button>
-              <div class="tooltip">Take the account from MetaMask!</div>
             </label>
           </div>
         </form>
