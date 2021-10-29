@@ -2,14 +2,10 @@
   <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <slot name="header">
-          This is the default title
-        </slot>
+        <slot name="header"></slot>
       </header>
       <section class="modal-body">
-        <slot name="body">
-          I'm the default body!
-        </slot>
+        <slot name="body"></slot>
       </section>
       <footer class="modal-footer">
         <slot name="footer">

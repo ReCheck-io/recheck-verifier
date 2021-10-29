@@ -1,18 +1,17 @@
 import keccak256 from "keccak256";
+import { format, addMinutes } from "date-fns";
+
 import config from "../chain/config";
 
 export const formatDate = val => {
-  const date = new Date(parseFloat(val) * 1000);
+  let date = new Date(parseFloat(val) * 1000);
 
-  const month =
-    date.getMonth() + 1 < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const hour = date.getUTCHours();
-  const minute = date.getUTCMinutes();
-  const second = date.getUTCSeconds();
+  const newDate = format(
+    addMinutes(date, date.getTimezoneOffset()),
+    "dd.MM.yyyy HH:mm:ss"
+  );
 
-  const formattedDate = `${day}.${month}.${year}   ${hour}:${minute}:${second} UTC`;
+  const formattedDate = `${newDate} UTC`;
 
   return formattedDate;
 };
