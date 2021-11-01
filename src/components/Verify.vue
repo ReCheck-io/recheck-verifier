@@ -4,14 +4,14 @@
     <div class="content">
       <div id="container" @dragover.prevent @drop.prevent>
         <form action="">
-          <div class="dropbox" @drop="handleFileDrop">
+          <div class="dropbox" @drop="handleFileUpload">
             <img src="../assets/file.svg" alt="" />
             <input
               type="file"
               multiple
               id="file-upload"
               placeholder="upload file"
-              @change="handleFileInput"
+              @change="handleFileUpload"
             />
             <p v-if="file.name" id="file-name-p">
               <span id="file-name-span">
@@ -104,7 +104,7 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
-              <div class="tooltip">Take the account from MetaMask!</div>
+              <div class="tooltip">Connect MetaMask Wallet</div>
             </label>
           </div>
           <div
@@ -136,7 +136,7 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
-              <div class="tooltip">Take the account from MetaMask!</div>
+              <div class="tooltip">Connect MetaMask Wallet</div>
             </label>
           </div>
           <div

@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { isNullAny, formatDate } from "../scripts/utils";
+import { isNullAny, formatDate } from "../scripts";
 import globalConfig from "./config.js";
 import { eventBus } from "../main.js";
 const ethConfig = globalConfig.eth;

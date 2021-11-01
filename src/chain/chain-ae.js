@@ -2,7 +2,7 @@
 import { Universal } from "@aeternity/aepp-sdk";
 import chainConfig from "./config.js";
 import { eventBus } from "../main.js";
-import { formatDate } from "../scripts/utils";
+import { formatDate } from "../scripts";
 
 let aeConfig = chainConfig.ae;
 

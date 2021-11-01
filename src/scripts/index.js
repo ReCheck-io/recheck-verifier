@@ -58,3 +58,52 @@ export const getHash = string => {
 export function isValidEmail(emailAddress) {
   return /(.+)@(.+){2,}\.(.+){2,}/.test(emailAddress);
 }
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function decodeUriParams() {
+  let newUri = "";
+  try {
+    newUri = decodeURI(window.location.href);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+
+  let uri = newUri.split("?");
+  if (uri.length === 2) {
+    let vars = uri[1].split("&");
+    let getVars = {};
+    let tmp = "";
+    vars.forEach(function(v) {
+      tmp = v.split("=");
+      if (tmp.length === 2) getVars[tmp[0]] = tmp[1];
+    });
+    return getVars;
+  }
+}
+
+export function readFileAsync(e) {
+  let files = e.target.files || e.dataTransfer.files;
+
+  if (!files || !files.length) return;
+
+  let file = files[0];
+
+  document.getElementById("add-document-container").style.display = "none";
+
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = () => {
+      let payload = btoa(reader.result);
+      resolve({ file, payload });
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsArrayBuffer(file);
+  });
+}

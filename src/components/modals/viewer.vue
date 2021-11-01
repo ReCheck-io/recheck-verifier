@@ -4,9 +4,9 @@
       <header class="modal-header">
         <slot name="header"></slot>
       </header>
-      <section class="modal-body">
+      <div class="modal-body">
         <slot name="body"></slot>
-      </section>
+      </div>
       <footer class="modal-footer">
         <slot name="footer">
           <button type="button" class="btn-close" @click="close">
@@ -41,7 +41,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.719);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@ export default {
 
 .modal {
   background: #ffffff;
-  box-shadow: 2px 2px 20px 1px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
   overflow-wrap: break-word;
   display: flex;
   flex-direction: column;
@@ -59,43 +59,30 @@ export default {
   margin-left: auto;
   margin-right: auto;
   font-size: 14px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .modal-header,
 .modal-footer {
-  padding: 12px;
+  padding: 16px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-header {
   border-bottom: 1px solid #eeeeee;
 }
 
-.svg_result {
+.modal-header h1,
+.modal-header h2,
+.modal-header h3 {
   margin: 0;
-  padding: 0;
-  justify-content: center;
-  /* box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1); */
 }
 
-.result_svg {
-  flex: 1 1 20%;
-  align-items: flex-end;
-}
-
-.result_title {
-  flex: 1 1 60%;
-  text-align: center;
-}
-
-.result_blank {
-  flex: 1 1 20%;
-}
-
-h2 {
-  margin-left: auto;
-  margin-right: auto;
+.modal-header svg {
+  width: 24px;
+  height: 24px;
 }
 
 .modal-footer {
@@ -109,21 +96,16 @@ h2 {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 26px 0;
+  padding: 26px 14px;
 }
 
 .modal p {
   display: flex;
 }
 
-.modal-text {
-  width: 80%;
-}
-
-.modal-info {
+.modal-body p span {
+  font-size: 15px;
   font-weight: bold;
-  width: 20%;
-  padding-left: 3%;
 }
 
 .btn-close {
@@ -140,7 +122,7 @@ h2 {
   border: 1px solid rgba(0, 40, 65, 0.9);
   color: white;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .btn-close:hover {
@@ -161,8 +143,9 @@ h2 {
   background-color: #002b49;
   color: #fff;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: 4px;
 }
+
 .downloadbtn:hover {
   background-color: #001d31;
 }
@@ -173,8 +156,8 @@ h2 {
   }
 
   .modal {
-    height: 90%;
-    width: 90%;
+    max-height: 90%;
+    max-width: 90%;
     overflow: scroll;
   }
 }

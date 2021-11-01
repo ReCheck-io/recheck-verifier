@@ -2,36 +2,17 @@
   <div id="app">
     <Header />
     <Verify />
-    <viewer v-show="isModalVisible" @close="closeModal">
+    <viewer v-show="!isModalVisible" @close="closeModal">
       <template #header>
-        <div class="result_svg">
-          <p v-if="chainData !== '' && userData !== ''" class="svg_result">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="rgba(131, 178, 78, 0.8)"
-              stroke="none"
-              stroke-width="1.5"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </p>
-        </div>
-        <div class="result_title"><h3>Verified information</h3></div>
-        <div class="result_blank"></div>
+        <CircleIcon :isSuccess="chainData !== '' && userData !== ''" />
+        <span v-if="chainData !== '' && userData !== ''">
+          <h2>Verify Transaction Details</h2>
+        </span>
+        <h2 v-else>Transaction data doesn't exists</h2>
       </template>
       <template #body>
-        <h2 v-if="errorData">{{ errorData }}</h2>
         <div v-if="chainData !== '' && userData !== ''">
-          <p v-if="userData.senderId">
-            <span class="modal-info">Sender ID: </span>
-            <span class="modal-text">{{ userData.senderId }}</span>
-          </p>
+          <p><span>Sender ID: </span> {{ userData.senderId }}</p>
           <p
             v-if="
               !['upload', 'register', 'sign', 'download', 'verify'].includes(
@@ -39,29 +20,30 @@
               ) && userData.recipientId
             "
           >
-            <span class="modal-info">Recipient ID: </span>
-            <span class="modal-text">{{ userData.recipientId }}</span>
+            <span>Recipient ID: </span> {{ userData.recipientId }}
           </p>
-          <p>
-            <span class="modal-info"> Action type: </span>
-            <span class="modal-text">{{ userData.actionType }}</span>
-          </p>
-          <p>
-            <span class="modal-info">Data hash: </span>
-            <span class="modal-text">{{ chainData.recordId }}</span>
-          </p>
-          <p>
-            <span class="modal-info">Trail: </span>
-            <span class="modal-text">{{ chainData.trailHash }}</span>
-          </p>
-          <p>
-            <span class="modal-info">Trail Signature: </span>
-            <span class="modal-text">{{ chainData.trailHashSigHash }}</span>
-          </p>
-          <p>
-            <span class="modal-info">Date: </span>
-            <span class="modal-text">{{ chainData.date }}</span>
-          </p>
+          <p><span>Timestamp: </span> {{ chainData.date }}</p>
+
+          <div>
+            <button
+              type="button"
+              class="btn sm"
+              style="margin-bottom: 12px;"
+              @click="isVisibleTxDetails = !isVisibleTxDetails"
+            >
+              Show Blockchain Details
+            </button>
+          </div>
+
+          <div class="tx-details" v-if="isVisibleTxDetails">
+            <p><span>Action Type: </span>{{ userData.actionType }}</p>
+            <p><span>Data Hash: </span> {{ chainData.recordId }}</p>
+            <p><span>Trail Hash: </span> {{ chainData.trailHash }}</p>
+            <p>
+              <span>Trail Hash Signature: </span>
+              {{ chainData.trailHashSigHash }}
+            </p>
+          </div>
         </div>
       </template>
     </viewer>
@@ -72,13 +54,15 @@
 import Verify from "./components/Verify.vue";
 import Header from "./components/Header.vue";
 import viewer from "./components/modals/viewer.vue";
+import CircleIcon from "./components/circle-icon/index.vue";
+import { isNullAny, decodeUriParams, capitalizeFirstLetter } from "./scripts";
 import { eventBus } from "./main";
-import { isNullAny } from "./scripts/utils";
 
 export default {
   name: "App",
 
   components: {
+    CircleIcon,
     Verify,
     Header,
     viewer
@@ -86,6 +70,7 @@ export default {
 
   data() {
     return {
+      isVisibleTxDetails: false,
       isModalVisible: false,
       chainData: {},
       userData: {},
@@ -95,23 +80,7 @@ export default {
   },
 
   created() {
-    let newUri = "";
-    try {
-      newUri = decodeURI(window.location.href);
-    } catch (e) {
-      console.error(e);
-    }
-    let uri = newUri.split("?");
-    if (uri.length === 2) {
-      let vars = uri[1].split("&");
-      let getVars = {};
-      let tmp = "";
-      vars.forEach(function(v) {
-        tmp = v.split("=");
-        if (tmp.length === 2) getVars[tmp[0]] = tmp[1];
-      });
-      this.uriParams = getVars;
-    }
+    this.uriParams = decodeUriParams();
   },
 
   mounted() {
@@ -169,12 +138,19 @@ export default {
       }, 200);
     }
   },
+
   methods: {
     showModal() {
       this.isModalVisible = true;
     },
     closeModal() {
       this.isModalVisible = false;
+    }
+  },
+
+  computed: {
+    fullName: function() {
+      return capitalizeFirstLetter(this.userData?.actionType);
     }
   }
 };

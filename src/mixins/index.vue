@@ -5,8 +5,9 @@ import {
   getHash,
   isValidAddress,
   isValidEmail,
-  isNullAny
-} from "../scripts/utils";
+  isNullAny,
+  readFileAsync
+} from "../scripts";
 
 const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
 const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
@@ -17,7 +18,7 @@ export default {
       file: {},
       isBeta: false,
       toggleValue: true,
-      currentNetwork: "ae",
+      currentNetwork: "eth",
       web3: null,
 
       dataId: "",
@@ -26,12 +27,12 @@ export default {
       actionAttributes: "",
       payload: "",
       options: [
-        {
-          title: "Registered",
-          desc: "Registered to the chain",
-          img: "./register.svg",
-          actionType: "register"
-        },
+        // {
+        //   title: "Registered",
+        //   desc: "Registered to the chain",
+        //   img: "./register.svg",
+        //   actionType: "register"
+        // },
         {
           title: "Uploaded",
           desc: "Uploaded on chain",
@@ -57,16 +58,16 @@ export default {
           actionType: "sign"
         },
         {
-          title: "Downloaded",
-          desc: "Downloaded by someone",
-          img: "./download.svg",
-          actionType: "download"
-        },
-        {
           title: "Decrypted",
           desc: "Decrypted by someone",
           img: "./unlock.svg",
           actionType: "verify"
+        },
+        {
+          title: "Downloaded",
+          desc: "Downloaded by someone",
+          img: "./download.svg",
+          actionType: "download"
         }
       ]
     };
@@ -80,58 +81,33 @@ export default {
         this.currentNetwork = "ae";
       }
     });
+
     const dropArea = document.querySelector(".dropbox");
     dropArea !== null
       ? dropArea.addEventListener("click", () => this.openFilePicker())
       : "";
   },
 
-  // beforeUpdate() {
-  //   const dropArea = document.querySelector(".dropbox");
-  //   dropArea.removeEventListener("click", () => this.openFilePicker());
-  // },
-
   methods: {
     openFilePicker: () => document.querySelector("#file-upload").click(),
+    customLabel: ({ title, desc }) => `${title} – ${desc}`,
 
-    customLabel({ title, desc }) {
-      return `${title} – ${desc}`;
-    },
-
-    handleFileInput(e) {
-      let files = e.target.files[0];
-      let reader = new FileReader();
-      if (!files) return;
-      this.file = files;
-      reader.onload = async function() {
-        let rawData = reader.result;
-        this.payload = btoa(rawData);
-      }.bind(this);
-      reader.readAsBinaryString(files);
-      document.getElementById("add-document-container").style.display = "none";
-    },
-
-    handleFileDrop(e) {
-      let droppedFiles = e.dataTransfer.files[0];
-      let reader = new FileReader();
-      if (!droppedFiles) return;
-      this.file = droppedFiles;
-      reader.onload = async function() {
-        let rawData = reader.result;
-        this.payload = btoa(rawData);
-      }.bind(this);
-      reader.readAsBinaryString(droppedFiles);
-      document.getElementById("add-document-container").style.display = "none";
+    async handleFileUpload(e) {
+      const { file, payload } = await readFileAsync(e);
+      console.log({ file, payload });
+      this.file = file;
+      this.payload = payload;
     },
 
     searchOnChain: async function() {
       const trailHash = this.generateTrailHash();
-      console.log(trailHash);
+
       const userObj = {
         senderId: this.senderId,
         recipientId: this.recipientId,
         actionType: this.actionAttributes.actionType
       };
+
       if (!isNullAny(trailHash)) {
         if (this.currentNetwork === "eth") {
           checkTrailHashETH(trailHash);
@@ -184,6 +160,7 @@ export default {
 
           this.web3 = window.web3;
           const currentWallet = await this.web3.eth.getAccounts();
+
           if (idType === "senderId") {
             this.senderId = currentWallet[0];
           } else if (idType === "recipientId") {
