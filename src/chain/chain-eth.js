@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { isNullAny, formatDate } from "../scripts";
+import { isNullAny, formatDate } from "../utils";
 import globalConfig from "./config.js";
 import { eventBus } from "../main.js";
 const ethConfig = globalConfig.eth;
@@ -45,7 +45,7 @@ export const checkTrailHash = trailHash => {
         trailHashSigHash: result.trailSignature,
         timestamp: result.timestamp,
         subRecords: result.subRecords,
-        date: formatDate(result.timestamp)
+        ...formatDate(result.timestamp)
       };
       if (result.trail.startsWith("0x0000000000")) {
         eventBus.$emit("checkSearch", "Doesn't exist");

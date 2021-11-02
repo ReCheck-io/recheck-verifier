@@ -2,7 +2,7 @@
 import { Universal } from "@aeternity/aepp-sdk";
 import chainConfig from "./config.js";
 import { eventBus } from "../main.js";
-import { formatDate } from "../scripts";
+import { formatDate } from "../utils";
 
 let aeConfig = chainConfig.ae;
 
@@ -94,7 +94,7 @@ export const checkTrailHash = async (trailHash, isBeta = false) => {
     result.creator = fixHashPrefix(decodedResult.creator);
     result.timestamp = decodedResult.timestamp / 1000;
     result.subRecords = decodedResult.subRecords;
-    result.date = formatDate(result.timestamp);
+    result = { ...result, ...formatDate(result.timestamp) };
 
     if (result.trailHash.startsWith("0x0000000000")) {
       eventBus.$emit("checkSearch", "Doesn't exist");

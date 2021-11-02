@@ -104,7 +104,9 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
-              <div class="tooltip">Connect MetaMask Wallet</div>
+              <div class="tooltip">
+                Use MetaMask - connect and enter your address
+              </div>
             </label>
           </div>
           <div
@@ -136,7 +138,9 @@
               >
                 <img src="../assets/mm.png" alt="" />
               </button>
-              <div class="tooltip">Connect MetaMask Wallet</div>
+              <div class="tooltip">
+                Use MetaMask - connect and enter your address
+              </div>
             </label>
           </div>
           <div

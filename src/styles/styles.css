@@ -133,8 +133,7 @@ label > img {
   width: 220px;
   color: white;
   background-color: black;
-  padding-top: 5px;
-  padding-bottom: 7px;
+  padding: 8px;
   border-radius: 6px;
   text-align: center;
   transition: all 300ms ease;
@@ -143,7 +142,7 @@ label > img {
   position: absolute;
   display: block;
   right: 44px;
-  top: 42%;
+  top: 30%;
   z-index: 1;
 
   /* Visibility */

@@ -4,16 +4,16 @@ import { format, addMinutes } from "date-fns";
 import config from "../chain/config";
 
 export const formatDate = val => {
-  let date = new Date(parseFloat(val) * 1000);
+  let parsedDate = new Date(parseFloat(val) * 1000);
 
   const newDate = format(
-    addMinutes(date, date.getTimezoneOffset()),
+    addMinutes(parsedDate, parsedDate.getTimezoneOffset()),
     "dd.MM.yyyy HH:mm:ss"
   );
 
-  const formattedDate = `${newDate} UTC`;
+  const [date, time] = newDate.split(" ");
 
-  return formattedDate;
+  return { date, time };
 };
 
 export function isNullAny(...args) {
@@ -59,7 +59,7 @@ export function isValidEmail(emailAddress) {
   return /(.+)@(.+){2,}\.(.+){2,}/.test(emailAddress);
 }
 
-export function capitalizeFirstLetter(string) {
+export function capitalizeFirstLetter(string = "") {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -104,6 +104,6 @@ export function readFileAsync(e) {
 
     reader.onerror = reject;
 
-    reader.readAsArrayBuffer(file);
+    reader.readAsBinaryString(file);
   });
 }

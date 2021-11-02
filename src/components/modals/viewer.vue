@@ -88,7 +88,6 @@ export default {
 .modal-footer {
   border-top: 1px solid #eeeeee;
   justify-content: center;
-  padding: 0;
   font-size: 12px;
 }
 
@@ -100,7 +99,8 @@ export default {
 }
 
 .modal p {
-  display: flex;
+  font-size: 15px;
+  line-height: 1.45;
 }
 
 .modal-body p span {
@@ -109,17 +109,15 @@ export default {
 }
 
 .btn-close {
-  width: 20%;
   display: flex;
+  min-width: 100px;
   justify-content: center;
-  margin: 12px 0;
   outline: 0;
   border: none;
   font-size: 14px;
   font-weight: bold;
-  padding: 0.65em 2em;
+  padding: 10px 18px;
   background-color: #04558a;
-  border: 1px solid rgba(0, 40, 65, 0.9);
   color: white;
   cursor: pointer;
   border-radius: 4px;
@@ -159,6 +157,17 @@ export default {
     max-height: 90%;
     max-width: 90%;
     overflow: scroll;
+  }
+}
+@media (max-width: 420px) {
+  .modal-header .circle {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+  .modal-header h2 {
+    /* font-weight: 400; */
+    font-size: 16px;
   }
 }
 </style>

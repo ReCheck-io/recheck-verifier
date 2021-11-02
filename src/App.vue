@@ -2,27 +2,27 @@
   <div id="app">
     <Header />
     <Verify />
-    <viewer v-show="!isModalVisible" @close="closeModal">
+    <viewer v-show="isModalVisible" @close="closeModal">
       <template #header>
         <CircleIcon :isSuccess="chainData !== '' && userData !== ''" />
         <span v-if="chainData !== '' && userData !== ''">
-          <h2>Verify Transaction Details</h2>
+          <h2>Successful validation!</h2>
         </span>
-        <h2 v-else>Transaction data doesn't exists</h2>
+        <h2 v-else>Validation failed!</h2>
       </template>
       <template #body>
         <div v-if="chainData !== '' && userData !== ''">
-          <p><span>Sender ID: </span> {{ userData.senderId }}</p>
-          <p
-            v-if="
-              !['upload', 'register', 'sign', 'download', 'verify'].includes(
-                userData.actionType
-              ) && userData.recipientId
-            "
-          >
-            <span>Recipient ID: </span> {{ userData.recipientId }}
+          <p>
+            This item is <b>{{ actionType }}ed</b> on
+            <b>{{ network }}</b>
+            blockchain on <b>{{ chainData.date }}</b> at
+            <b>{{ chainData.time }} UTC</b> by <b>{{ userData.senderId }}</b
+            >.
           </p>
-          <p><span>Timestamp: </span> {{ chainData.date }}</p>
+          <p>
+            Click below to see technical details about the recorded blockchain
+            transaction.
+          </p>
 
           <div>
             <button
@@ -35,8 +35,8 @@
             </button>
           </div>
 
-          <div class="tx-details" v-if="isVisibleTxDetails">
-            <p><span>Action Type: </span>{{ userData.actionType }}</p>
+          <div class="tx-details" v-show="isVisibleTxDetails">
+            <p><span>Action Type: </span>{{ actionType }}</p>
             <p><span>Data Hash: </span> {{ chainData.recordId }}</p>
             <p><span>Trail Hash: </span> {{ chainData.trailHash }}</p>
             <p>
@@ -55,7 +55,8 @@ import Verify from "./components/Verify.vue";
 import Header from "./components/Header.vue";
 import viewer from "./components/modals/viewer.vue";
 import CircleIcon from "./components/circle-icon/index.vue";
-import { isNullAny, decodeUriParams, capitalizeFirstLetter } from "./scripts";
+import { isNullAny, decodeUriParams, capitalizeFirstLetter } from "./utils";
+import { NETWORKS_LIST } from "./constants";
 import { eventBus } from "./main";
 
 export default {
@@ -97,9 +98,7 @@ export default {
       }
     });
     eventBus.$on("getUserData", res => {
-      if (res) {
-        this.userData = res;
-      }
+      if (res) this.userData = res;
     });
 
     if (!isNullAny(this.uriParams)) {
@@ -142,15 +141,25 @@ export default {
   methods: {
     showModal() {
       this.isModalVisible = true;
+      this.isVisibleTxDetails = false;
     },
     closeModal() {
       this.isModalVisible = false;
+      this.isVisibleTxDetails = false;
     }
   },
 
   computed: {
-    fullName: function() {
-      return capitalizeFirstLetter(this.userData?.actionType);
+    actionType: function() {
+      return this.userData.actionType && this.userData.actionType !== ""
+        ? capitalizeFirstLetter(this.userData?.actionType)
+        : "";
+    },
+    network: function() {
+      return this.$root.$children[0].$children[1].currentNetwork &&
+        this.$root.$children[0].$children[1].currentNetwork !== ""
+        ? NETWORKS_LIST[this.$root.$children[0].$children[1].currentNetwork]
+        : "eth";
     }
   }
 };

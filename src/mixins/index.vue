@@ -7,7 +7,7 @@ import {
   isValidEmail,
   isNullAny,
   readFileAsync
-} from "../scripts";
+} from "../utils";
 
 const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
 const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
@@ -94,7 +94,6 @@ export default {
 
     async handleFileUpload(e) {
       const { file, payload } = await readFileAsync(e);
-      console.log({ file, payload });
       this.file = file;
       this.payload = payload;
     },
@@ -170,6 +169,9 @@ export default {
           // User denied account access...
           console.error("User denied account access");
         }
+      } else {
+        // User doesn't have installed metamask extension
+        window.open("https://metamask.io/download.html", "_blank");
       }
     },
 
