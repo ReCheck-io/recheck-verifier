@@ -157,9 +157,9 @@ export default {
     },
     network: function() {
       return this.$root.$children[0].$children[1].currentNetwork &&
-        this.$root.$children[0].$children[1].currentNetwork !== ""
-        ? NETWORKS_LIST[this.$root.$children[0].$children[1].currentNetwork]
-        : "eth";
+      this.$root.$children[0].$children[1].currentNetwork !== ""
+          ? NETWORKS_LIST[this.$root.$children[0].$children[1].currentNetwork]
+          : "eth";//TODO add polygon
     }
   }
 };

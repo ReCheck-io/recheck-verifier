@@ -1,6 +1,6 @@
 <script>
 import Web3 from "web3";
-import { eventBus } from "../main";
+import {eventBus} from "../main";
 import {
   getHash,
   isValidAddress,
@@ -9,8 +9,9 @@ import {
   readFileAsync
 } from "../utils";
 
-const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
-const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
+const {checkTrailHash: checkTrailHashAE} = require("../chain/chain-ae");
+const {checkTrailHash: checkTrailHashETH} = require("../chain/chain-eth");
+const {checkTrailHash: checkTrailHashPOLY} = require("../chain/chain-poly");
 
 export default {
   data() {
@@ -74,6 +75,7 @@ export default {
   },
   mounted() {
     eventBus.$on("networkChange", res => {
+      //TODO add polygon
       if (res) {
         this.currentNetwork = "eth";
         !this.options[0];
@@ -84,21 +86,21 @@ export default {
 
     const dropArea = document.querySelector(".dropbox");
     dropArea !== null
-      ? dropArea.addEventListener("click", () => this.openFilePicker())
-      : "";
+        ? dropArea.addEventListener("click", () => this.openFilePicker())
+        : "";
   },
 
   methods: {
     openFilePicker: () => document.querySelector("#file-upload").click(),
-    customLabel: ({ title, desc }) => `${title} – ${desc}`,
+    customLabel: ({title, desc}) => `${title} – ${desc}`,
 
     async handleFileUpload(e) {
-      const { file, payload } = await readFileAsync(e);
+      const {file, payload} = await readFileAsync(e);
       this.file = file;
       this.payload = payload;
     },
 
-    searchOnChain: async function() {
+    searchOnChain: async function () {
       const trailHash = this.generateTrailHash();
 
       const userObj = {
@@ -108,11 +110,18 @@ export default {
       };
 
       if (!isNullAny(trailHash)) {
-        if (this.currentNetwork === "eth") {
-          checkTrailHashETH(trailHash);
-        } else if (this.currentNetwork === "ae") {
-          checkTrailHashAE(trailHash, this.isBeta);
+        switch (this.currentNetwork) {
+          case "eth":
+            checkTrailHashETH(trailHash, this.isBeta);
+            break;
+          case "ae":
+            await checkTrailHashAE(trailHash, this.isBeta);
+            break;
+          case "poly":
+            checkTrailHashPOLY(trailHash, this.isBeta);
+            break;
         }
+
         eventBus.$emit("getUserData", userObj);
       } else {
         alert("Incorrect public address!");
@@ -124,33 +133,33 @@ export default {
       const actionType = this.actionAttributes.actionType;
 
       if (
-        ["upload", "register", "sign", "download", "verify"].includes(
-          actionType
-        )
+          ["upload", "register", "sign", "download", "verify"].includes(
+              actionType
+          )
       ) {
         this.recipientId = this.senderId;
       }
 
       const dataId = isNullAny(this.dataId)
-        ? getHash(getHash(this.payload))
-        : this.dataId;
+          ? getHash(getHash(this.payload))
+          : this.dataId;
 
       if (
-        isNullAny(actionType, dataId) ||
-        !isValid(this.senderId) ||
-        (!isValid(this.recipientId) && !isValidEmail(this.recipientId))
+          isNullAny(actionType, dataId) ||
+          !isValid(this.senderId) ||
+          (!isValid(this.recipientId) && !isValidEmail(this.recipientId))
       ) {
         return null;
       }
 
       let trailHash = getHash(
-        dataId + this.senderId + actionType + this.recipientId
+          dataId + this.senderId + actionType + this.recipientId
       );
 
       return trailHash;
     },
 
-    initWeb3: async function(idType) {
+    initWeb3: async function (idType) {
       if (window.ethereum) {
         try {
           // Request account access

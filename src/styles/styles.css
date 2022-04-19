@@ -316,6 +316,7 @@ span.multiselect__option.multiselect__option--highlight {
   }
 
   .toggle-label-eth,
+  .toggle-label-poly,
   .toggle-label-ae {
     display: none;
   }

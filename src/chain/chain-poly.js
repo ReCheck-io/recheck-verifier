@@ -4,14 +4,14 @@ import globalConfig from "./config.js";
 import {eventBus} from "../main.js";
 import chainConfig from "./config";
 
-let ethConfig = globalConfig.eth;
+let polyConfig = globalConfig.poly;
 
 const getContractForPrivateKey = privateKey => {
   if (isNullAny(privateKey)) {
-    privateKey = ethConfig.privateKey;
+    privateKey = polyConfig.privateKey;
   }
 
-  let web3 = new Web3(ethConfig.gateway);
+  let web3 = new Web3(polyConfig.gateway);
 
   let account = web3.eth.accounts.privateKeyToAccount(privateKey);
 
@@ -19,11 +19,11 @@ const getContractForPrivateKey = privateKey => {
   web3.eth.defaultAccount = account.address;
 
   let contract = new web3.eth.Contract(
-    ethConfig.contractAbi,
-    ethConfig.contractAddress,
-    {
-      gasPrice: ethConfig.defaultGasPrice
-    }
+      polyConfig.contractAbi,
+      polyConfig.contractAddress,
+      {
+        gasPrice: polyConfig.defaultGasPrice
+      }
   );
 
   return {
@@ -35,10 +35,10 @@ const getContractForPrivateKey = privateKey => {
 
 export const checkTrailHash = (trailHash, isBeta = false) => {
   if (isBeta) {
-    ethConfig = chainConfig.ethBeta;
+    polyConfig = chainConfig.polyBeta;
   }
 
-  let contractObj = getContractForPrivateKey(ethConfig.privateKey);
+  let contractObj = getContractForPrivateKey(polyConfig.privateKey);
 
   contractObj.contract.methods
       .verifyTrail(trailHash)
@@ -47,16 +47,16 @@ export const checkTrailHash = (trailHash, isBeta = false) => {
         const adaptedResult = {
           recordId: result.recordId,
           parentId: result.parentRecordType,
-        trailHash: result.trail,
-        trailHashSigHash: result.trailSignature,
-        timestamp: result.timestamp,
-        subRecords: result.subRecords,
-        ...formatDate(result.timestamp)
-      };
-      if (result.trail.startsWith("0x0000000000")) {
-        eventBus.$emit("checkSearch", "Doesn't exist");
-      } else {
-        eventBus.$emit("checkSearch", adaptedResult);
-      }
-    });
+          trailHash: result.trail,
+          trailHashSigHash: result.trailSignature,
+          timestamp: result.timestamp,
+          subRecords: result.subRecords,
+          ...formatDate(result.timestamp)
+        };
+        if (result.trail.startsWith("0x0000000000")) {
+          eventBus.$emit("checkSearch", "Doesn't exist");
+        } else {
+          eventBus.$emit("checkSearch", adaptedResult);
+        }
+      });
 };

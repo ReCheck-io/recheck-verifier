@@ -37,14 +37,12 @@ export function isNullAny(...args) {
 export function isValidAddress(currentNetwork, address) {
   switch (currentNetwork) {
     case "eth":
-      return new RegExp(`^${config.eth.addressPrefix}[0-9a-fA-F]{40}$`).test(
-        address
-      );
+      return new RegExp(`^${config.eth.addressPrefix}[0-9a-fA-F]{40}$`).test(address);
+    case "poly":
+      return new RegExp(`^${config.poly.addressPrefix}[0-9a-fA-F]{40}$`).test(address);
     case "ae":
-      return (
-        new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(
-          address
-        ) || new RegExp(`^re_[0-9a-zA-Z]{41,}$`).test(address)
+      return (new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(address)
+          || new RegExp(`^re_[0-9a-zA-Z]{41,}$`).test(address)
       );
     default:
       return false;

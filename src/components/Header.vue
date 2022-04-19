@@ -19,11 +19,16 @@
         <div class="toggle-switch">
           <span class="toggle-label-ae">AETERNITY</span>
           <span class="toggle-label-eth right-active">ETHEREUM</span>
+          <span class="toggle-label-poly right-active">POLYGON</span>
           <span class="toggle-label-media">
-            <img src="../assets/ae.svg" class="aeLogo" />
+<!--            TODO add polygon logo-->
+            <img src="../assets/poly.svg" class="polyLogo"/>
           </span>
           <span class="toggle-label-media">
-            <img src="../assets/eth.svg" class="ethLogo" />
+            <img src="../assets/ae.svg" class="aeLogo"/>
+          </span>
+          <span class="toggle-label-media">
+            <img src="../assets/eth.svg" class="ethLogo"/>
           </span>
         </div>
       </label>
@@ -44,6 +49,7 @@ export default {
     toggleClass(newClass) {
       document.querySelector(".toggle-label-ae").classList.toggle(newClass);
       document.querySelector(".toggle-label-eth").classList.toggle(newClass);
+      document.querySelector(".toggle-label-poly").classList.toggle(newClass);
     }
   }
 };
@@ -127,6 +133,7 @@ export default {
 }
 
 .toggle-label-ae,
+.toggle-label-poly,
 .toggle-label-eth {
   color: rgb(85, 81, 81);
   position: relative;
@@ -172,6 +179,15 @@ export default {
     height: auto;
     position: relative;
     top: 1px;
+  }
+
+  /*TODO add polygon logo*/
+  .polyLogo {
+    width: 24px;
+    height: auto;
+    position: relative;
+    top: 1px;
+    left: -5px;
   }
 
   .aeLogo {
