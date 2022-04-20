@@ -1,7 +1,7 @@
 import Web3 from "web3";
-import {isNullAny, formatDate} from "../utils";
+import { isNullAny, formatDate } from "../utils";
 import globalConfig from "./config.js";
-import {eventBus} from "../main.js";
+import { eventBus } from "../main.js";
 import chainConfig from "./config";
 
 let ethConfig = globalConfig.eth;
@@ -41,12 +41,12 @@ export const checkTrailHash = (trailHash, isBeta = false) => {
   let contractObj = getContractForPrivateKey(ethConfig.privateKey);
 
   contractObj.contract.methods
-      .verifyTrail(trailHash)
-      .call({from: contractObj.account.address})
-      .then(result => {
-        const adaptedResult = {
-          recordId: result.recordId,
-          parentId: result.parentRecordType,
+    .verifyTrail(trailHash)
+    .call({ from: contractObj.account.address })
+    .then(result => {
+      const adaptedResult = {
+        recordId: result.recordId,
+        parentId: result.parentRecordType,
         trailHash: result.trail,
         trailHashSigHash: result.trailSignature,
         timestamp: result.timestamp,

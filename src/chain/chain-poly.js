@@ -1,7 +1,7 @@
 import Web3 from "web3";
-import {isNullAny, formatDate} from "../utils";
+import { isNullAny, formatDate } from "../utils";
 import globalConfig from "./config.js";
-import {eventBus} from "../main.js";
+import { eventBus } from "../main.js";
 import chainConfig from "./config";
 
 let polyConfig = globalConfig.poly;
@@ -19,11 +19,11 @@ const getContractForPrivateKey = privateKey => {
   web3.eth.defaultAccount = account.address;
 
   let contract = new web3.eth.Contract(
-      polyConfig.contractAbi,
-      polyConfig.contractAddress,
-      {
-        gasPrice: polyConfig.defaultGasPrice
-      }
+    polyConfig.contractAbi,
+    polyConfig.contractAddress,
+    {
+      gasPrice: polyConfig.defaultGasPrice
+    }
   );
 
   return {
@@ -41,22 +41,22 @@ export const checkTrailHash = (trailHash, isBeta = false) => {
   let contractObj = getContractForPrivateKey(polyConfig.privateKey);
 
   contractObj.contract.methods
-      .verifyTrail(trailHash)
-      .call({from: contractObj.account.address})
-      .then(result => {
-        const adaptedResult = {
-          recordId: result.recordId,
-          parentId: result.parentRecordType,
-          trailHash: result.trail,
-          trailHashSigHash: result.trailSignature,
-          timestamp: result.timestamp,
-          subRecords: result.subRecords,
-          ...formatDate(result.timestamp)
-        };
-        if (result.trail.startsWith("0x0000000000")) {
-          eventBus.$emit("checkSearch", "Doesn't exist");
-        } else {
-          eventBus.$emit("checkSearch", adaptedResult);
-        }
-      });
+    .verifyTrail(trailHash)
+    .call({ from: contractObj.account.address })
+    .then(result => {
+      const adaptedResult = {
+        recordId: result.recordId,
+        parentId: result.parentRecordType,
+        trailHash: result.trail,
+        trailHashSigHash: result.trailSignature,
+        timestamp: result.timestamp,
+        subRecords: result.subRecords,
+        ...formatDate(result.timestamp)
+      };
+      if (result.trail.startsWith("0x0000000000")) {
+        eventBus.$emit("checkSearch", "Doesn't exist");
+      } else {
+        eventBus.$emit("checkSearch", adaptedResult);
+      }
+    });
 };

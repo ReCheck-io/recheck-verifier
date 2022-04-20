@@ -1,6 +1,7 @@
 const web3 = {
   eth: {
-    privateKey: "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+    privateKey:
+      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
     gateway: "https://n105.recheck.io",
     contractAddress: "0x4755Cf3f4009eC8591D5d196B82E954d75cEf015",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
@@ -8,8 +9,12 @@ const web3 = {
     contractAbi: require("../contracts/ETHContractAbi.js").contractAbi,
     addressPrefix: "0x"
   },
+
+  // contractAddress: "0x0fdE2633F4e8ed2e00F5544EA44dC5DD9a73c147",
+  // addressReadWrite: "0x0fdE2633F4e8ed2e00F5544EA44dC5DD9a73c147",
   ethBeta: {
-    privateKey: "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+    privateKey:
+      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
     gateway: "https://n105.recheck.io",
     contractAddress: "0x4755Cf3f4009eC8591D5d196B82E954d75cEf015",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
@@ -18,8 +23,10 @@ const web3 = {
     addressPrefix: "0x"
   },
   poly: {
-    privateKey: "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
-    gateway: 'https://rpc-mainnet.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52',
+    privateKey:
+      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+    gateway:
+      "https://rpc-mainnet.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52",
     contractAddress: "0x4755Cf3f4009eC8591D5d196B82E954d75cEf015",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
     defaultGasPrice: 25000000000,
@@ -27,8 +34,10 @@ const web3 = {
     addressPrefix: "0x"
   },
   polyBeta: {
-    privateKey: "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
-    gateway: 'https://rpc-mainnet.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52',
+    privateKey:
+      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+    gateway:
+      "https://rpc-mainnet.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52",
     contractAddress: "0x4755Cf3f4009eC8591D5d196B82E954d75cEf015",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
     defaultGasPrice: 25000000000,
@@ -37,7 +46,8 @@ const web3 = {
   },
   ae: {
     publicKey: "ak_2aFpvPdgDHdhcLUEtw8pykT3UDqK7R8R55aEE35aH9hB5Fx3jp",
-    privateKey: "0032eea4216176c33b0f84cdb3eae52bfaa7dbd80826b17c36f31cbeee1f57a0cf3501ce4a2a2f39016496c1ec44ae6d251f411e07bbd6ac0895f66a4c3ea848",
+    privateKey:
+      "0032eea4216176c33b0f84cdb3eae52bfaa7dbd80826b17c36f31cbeee1f57a0cf3501ce4a2a2f39016496c1ec44ae6d251f411e07bbd6ac0895f66a4c3ea848",
     gateway: "https://sdk-mainnet.aepps.com",
     contractPath: require("../contracts/AEContract.js").default,
     compiler: "https://compiler.aepps.com",
@@ -50,7 +60,8 @@ const web3 = {
   },
   aeBeta: {
     publicKey: "ak_2aFpvPdgDHdhcLUEtw8pykT3UDqK7R8R55aEE35aH9hB5Fx3jp",
-    privateKey: "0032eea4216176c33b0f84cdb3eae52bfaa7dbd80826b17c36f31cbeee1f57a0cf3501ce4a2a2f39016496c1ec44ae6d251f411e07bbd6ac0895f66a4c3ea848",
+    privateKey:
+      "0032eea4216176c33b0f84cdb3eae52bfaa7dbd80826b17c36f31cbeee1f57a0cf3501ce4a2a2f39016496c1ec44ae6d251f411e07bbd6ac0895f66a4c3ea848",
     gateway: "https://sdk-testnet.aepps.com",
     contractPath: require("../contracts/AEBetaContract.js").default,
     compiler: "https://compiler.aepps.com",
