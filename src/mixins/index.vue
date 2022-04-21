@@ -1,13 +1,7 @@
 <script>
 import Web3 from "web3";
 import { eventBus } from "../main";
-import {
-  getHash,
-  isValidAddress,
-  isValidEmail,
-  isNullAny,
-  readFileAsync
-} from "../utils";
+import { getHash, isNullAny, readFileAsync } from "../utils";
 
 const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
 const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
@@ -127,7 +121,7 @@ export default {
     },
 
     generateTrailHash() {
-      const isValid = address => isValidAddress(this.currentNetwork, address);
+      // const isValid = address => isValidAddress(this.currentNetwork, address);
       const actionType = this.actionAttributes.actionType;
 
       if (
@@ -142,11 +136,7 @@ export default {
         ? getHash(getHash(this.payload))
         : this.dataId;
 
-      if (
-        isNullAny(actionType, dataId) ||
-        !isValid(this.senderId) ||
-        (!isValid(this.recipientId) && !isValidEmail(this.recipientId))
-      ) {
+      if (isNullAny(actionType, dataId)) {
         return null;
       }
 
