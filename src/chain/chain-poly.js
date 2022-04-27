@@ -22,7 +22,8 @@ const getContractForPrivateKey = privateKey => {
     polyConfig.contractAbi,
     polyConfig.contractAddress,
     {
-      gasPrice: polyConfig.defaultGasPrice
+      gasPrice: ethConfig.defaultGasPrice,
+      from: contractObj.account.address
     }
   );
 
@@ -41,8 +42,8 @@ export const checkTrailHash = (trailHash, isBeta = false) => {
   let contractObj = getContractForPrivateKey(polyConfig.privateKey);
 
   contractObj.contract.methods
-    .verifyTrail(trailHash)
-    .call({ from: contractObj.account.address })
+      .verifyTrail(trailHash)
+      .call({from: contractObj.account.address, gasPrice: ethConfig.defaultGasPrice})
     .then(result => {
       const adaptedResult = {
         recordId: result.recordId,

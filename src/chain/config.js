@@ -1,21 +1,21 @@
 const web3 = {
   eth: {
     privateKey:
-      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+        "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
     gateway: "https://n105.recheck.io",
     contractAddress: "0x4755Cf3f4009eC8591D5d196B82E954d75cEf015",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
-    defaultGasPrice: 25000000000,
+    defaultGasPrice: 0,
     contractAbi: require("../contracts/ETHContractAbi.js").contractAbi,
     addressPrefix: "0x"
   },
   ethBeta: {
     privateKey:
-      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+        "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
     gateway: "https://n105.recheck.io",
     contractAddress: "0x0fdE2633F4e8ed2e00F5544EA44dC5DD9a73c147",
     addressReadWrite: "0x0fdE2633F4e8ed2e00F5544EA44dC5DD9a73c147",
-    defaultGasPrice: 25000000000,
+    defaultGasPrice: 0,
     contractAbi: require("../contracts/ETHContractAbi.js").contractAbi,
     addressPrefix: "0x"
   },
@@ -32,12 +32,12 @@ const web3 = {
   },
   polyBeta: {
     privateKey:
-      "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
+        "0x7ad6e1e8b00f9eff52b35fcc0bc94a6d7fcd52b0275609a808a736b3d31bff64",
     gateway:
-      "https://rpc-mumbai.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52",
+        "https://rpc-mumbai.maticvigil.com/v1/34b26294a1edd25d8236d397fa2194a5a6835e52",
     contractAddress: "0xF5C4b997BA23ea46ab1055bA4c7ce020d0C4E429",
     addressReadWrite: "0x0aFc561fea32E26942E0D0e152b42d18410190eF",
-    defaultGasPrice: 25000000000,
+    defaultGasPrice: 0,
     contractAbi: require("../contracts/POLYContractAbi.js").contractAbi,
     addressPrefix: "0x"
   },
