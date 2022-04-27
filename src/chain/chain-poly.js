@@ -18,13 +18,15 @@ const getContractForPrivateKey = privateKey => {
   web3.eth.accounts.wallet.add(account.privateKey);
   web3.eth.defaultAccount = account.address;
 
+  let contractObj = getContractForPrivateKey(polyConfig.privateKey);
+
   let contract = new web3.eth.Contract(
-    polyConfig.contractAbi,
-    polyConfig.contractAddress,
-    {
-      gasPrice: ethConfig.defaultGasPrice,
-      from: contractObj.account.address
-    }
+      polyConfig.contractAbi,
+      polyConfig.contractAddress,
+      {
+        gasPrice: polyConfig.defaultGasPrice,
+        from: contractObj.account.address
+      }
   );
 
   return {
@@ -43,7 +45,7 @@ export const checkTrailHash = (trailHash, isBeta = false) => {
 
   contractObj.contract.methods
       .verifyTrail(trailHash)
-      .call({from: contractObj.account.address, gasPrice: ethConfig.defaultGasPrice})
+      .call({from: contractObj.account.address, gasPrice: polyConfig.defaultGasPrice})
     .then(result => {
       const adaptedResult = {
         recordId: result.recordId,

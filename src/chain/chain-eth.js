@@ -18,6 +18,8 @@ const getContractForPrivateKey = privateKey => {
     web3.eth.accounts.wallet.add(account.privateKey);
     web3.eth.defaultAccount = account.address;
 
+    let contractObj = getContractForPrivateKey(ethConfig.privateKey);
+
     let contract = new web3.eth.Contract(
         ethConfig.contractAbi,
         ethConfig.contractAddress,
