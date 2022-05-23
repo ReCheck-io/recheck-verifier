@@ -56,7 +56,7 @@ const web3 = {
     privateKey:
         "0x0c08d481d144a42ac2958b89a13a39794f44365849f746ed00cd9c0af7e2385e",
     gateway:
-        "https://ec2-18-202-240-12.eu-west-1.compute.amazonaws.com:9650/ext/bc/22ofZGVM8zgpoDHSsCk1qKTUcXJEnxvEAJV6HnQz8o4ev9QE7k/rpc",
+        "http://ec2-18-202-240-12.eu-west-1.compute.amazonaws.com:9650/ext/bc/22ofZGVM8zgpoDHSsCk1qKTUcXJEnxvEAJV6HnQz8o4ev9QE7k/rpc",
     contractAddress: "0xC3c8D804D563332068af1c50b786F04Aac18babe",
     addressReadWrite: "0xC3c8D804D563332068af1c50b786F04Aac18babe",
     defaultGasPrice: 0,
