@@ -5,8 +5,8 @@ import { getHash, isNullAny, readFileAsync } from "../utils";
 
 const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
 const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
-const {checkTrailHash: checkTrailHashPOLY} = require("../chain/chain-poly");
-const {checkTrailHash: checkTrailHashAVAX} = require("../chain/chain-avax");
+const { checkTrailHash: checkTrailHashPOLY } = require("../chain/chain-poly");
+const { checkTrailHash: checkTrailHashAVAX } = require("../chain/chain-avax");
 
 export default {
   data() {

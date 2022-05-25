@@ -51,9 +51,10 @@ export default {
 
   data() {
     return {
-      networkOption: { title: "Polygon", network: "poly", img: "./poly.svg" },
+      networkOption: { title: "Avalanch", network: "avax", img: "./avax.svg" },
 
       networkOptions: [
+        { title: "Avalanch", network: "avax", img: "./avax.svg" },
         { title: "Polygon", network: "poly", img: "./poly.svg" },
         { title: "Ethereum", network: "eth", img: "./eth.svg" },
         { title: "Aeternity", network: "ae", img: "./ae.svg" }
