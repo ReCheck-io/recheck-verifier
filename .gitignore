@@ -1,9 +1,6 @@
-./src/chain/config.js
 .DS_Store
 node_modules
 /dist
-
-**/config.*.sample
 
 # local env files
 .env.local
@@ -25,3 +22,4 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
+/src/chain/config.js
