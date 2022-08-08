@@ -62,10 +62,23 @@ export default {
     };
   },
 
+  mounted() {
+    this.listenForChanges();
+  },
+
   methods: {
     customLabel: ({ title }) => title,
     handleChange(e) {
       eventBus.$emit("networkChange", e.network);
+    },
+    listenForChanges() {
+      eventBus.$on("networkChange", network => {
+        if (network) {
+          this.networkOption = this.networkOptions.find(
+            x => x.network === network
+          );
+        }
+      });
     },
     toggleClass(newClass) {
       document.querySelector(".toggle-label-ae").classList.toggle(newClass);

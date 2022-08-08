@@ -1,8 +1,8 @@
+/* eslint-disable no-empty */
 import keccak256 from "keccak256";
 import { format, addMinutes } from "date-fns";
 
 import config from "../chain/config";
-import {EMPTY_STRING, NULL_HASH, variableTypes} from "./constants.js";
 
 export const formatDate = val => {
   let parsedDate = new Date(parseFloat(val) * 1000);
@@ -22,16 +22,18 @@ export function isNullAny(...args) {
     if (current && current.constructor === Object) {
       try {
         current = JSON.parse(JSON.stringify(current));
-      } catch (ignored) {
-      }
+      } catch (ignored) {}
     }
 
-    if (current == null || // element == null covers element === undefined
-        (current.hasOwnProperty("length") && current.length === 0) || // has length and it's zero
-        (current.constructor === Object && Object.keys(current).length === 0) || // is an Object and has no keys
-        current.toString().toLowerCase() === variableTypes.NULL ||
-        current.toString().toLowerCase() === variableTypes.UNDEFINED ||
-        current.toString().trim() === EMPTY_STRING) {
+    if (
+      current == null || // element == null covers element === undefined
+      // eslint-disable-next-line no-prototype-builtins
+      (current.hasOwnProperty("length") && current.length === 0) || // has length and it's zero
+      (current.constructor === Object && Object.keys(current).length === 0) || // is an Object and has no keys
+      current.toString().toLowerCase() === "null" ||
+      current.toString().toLowerCase() === "undefined" ||
+      current.toString().trim() === ""
+    ) {
       return true;
     }
 
@@ -41,8 +43,7 @@ export function isNullAny(...args) {
           // is not a number and can be parsed as null date 1970
           return true;
         }
-      } catch (ignored) {
-      }
+      } catch (ignored) {}
     }
 
     try {
@@ -51,21 +52,22 @@ export function isNullAny(...args) {
         // recursive check for stringified object
         return true;
       }
-    } catch (ignored) {
-    }
+    } catch (ignored) {}
 
     // check for hashes of null values
-    if ([
-      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470", // ""/[].toString(),
-      "0x7bc087f4ef9d0dc15fef823bff9c78cc5cca8be0a85234afcfd807f412f40877", // {}.toString()
-      "0x518674ab2b227e5f11e9084f615d57663cde47bce1ba168b4c19c7ee22a73d70", // JSON.stringify([])
-      "0xb48d38f93eaa084033fc5970bf96e559c33c4cdc07d889ab00b4d63f9590739d", // JSON.stringify({})
-      "0xefbde2c3aee204a69b7696d4b10ff31137fe78e3946306284f806e2dfc68b805", // "null"
-      "0x019726c6babc1de231f26fd6cbb2df2c912784a2e1ba55295496269a6d3ff651", // "undefined"
-      "0x681afa780d17da29203322b473d3f210a7d621259a4e6ce9e403f5a266ff719a", // " "
-      "0xfc6664300e2ce056cb146b05edef3501ff8bd027c49a8dde866901679a24fb7e", // new Date(0).toString()
-      NULL_HASH,
-    ].includes(current)) {
+    if (
+      [
+        "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470", // ""/[].toString(),
+        "0x7bc087f4ef9d0dc15fef823bff9c78cc5cca8be0a85234afcfd807f412f40877", // {}.toString()
+        "0x518674ab2b227e5f11e9084f615d57663cde47bce1ba168b4c19c7ee22a73d70", // JSON.stringify([])
+        "0xb48d38f93eaa084033fc5970bf96e559c33c4cdc07d889ab00b4d63f9590739d", // JSON.stringify({})
+        "0xefbde2c3aee204a69b7696d4b10ff31137fe78e3946306284f806e2dfc68b805", // "null"
+        "0x019726c6babc1de231f26fd6cbb2df2c912784a2e1ba55295496269a6d3ff651", // "undefined"
+        "0x681afa780d17da29203322b473d3f210a7d621259a4e6ce9e403f5a266ff719a", // " "
+        "0xfc6664300e2ce056cb146b05edef3501ff8bd027c49a8dde866901679a24fb7e", // new Date(0).toString()
+        "0xa8eab68f6601f298379a826296d769846e5c70686e57905521d21e5d6cd826f7" // null
+      ].includes(current)
+    ) {
       return true;
     }
   }

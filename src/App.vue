@@ -131,6 +131,11 @@ export default {
                 document.getElementById(currentKey).value = value;
               }
               children[currentKey] = value;
+
+              // Toggle network change in the select menu
+              if (currentKey === "currentNetwork") {
+                eventBus.$emit("networkChange", value);
+              }
             }
           }
         }
