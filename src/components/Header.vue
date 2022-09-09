@@ -2,22 +2,22 @@
   <header class="header">
     <div class="container">
       <a href="/" class="logo">
-        <img src="../assets/recheck.png" class="logoImg" />
+        <img src="../assets/recheck.png" class="logoImg"/>
         <span>Transaction verifier</span>
       </a>
 
       <multiselect
-        v-model="networkOption"
-        label="title"
-        track-by="title"
-        :options="networkOptions"
-        :option-height="100"
-        :custom-label="customLabel"
-        :show-labels="false"
-        :allow-empty="false"
-        :max-height="200"
-        class="network-selector"
-        @select="handleChange($event)"
+          v-model="networkOption"
+          label="title"
+          track-by="title"
+          :options="networkOptions"
+          :option-height="100"
+          :custom-label="customLabel"
+          :show-labels="false"
+          :allow-empty="false"
+          :max-height="200"
+          class="network-selector"
+          @select="handleChange($event)"
       >
         <template slot="singleLabel" slot-scope="props">
           <span class="option__desc">
@@ -28,10 +28,10 @@
           <div class="option__desc">
             <span class="option__title">{{ props.option.title }}</span>
             <img
-              class="option__image"
-              :src="props.option.img"
-              alt=""
-              style="max-height:20px"
+                class="option__image"
+                :src="props.option.img"
+                alt=""
+                style="max-height:20px"
             />
           </div>
         </template>
@@ -42,23 +42,23 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import { eventBus } from "../main.js";
+import {eventBus} from "../main.js";
 
 export default {
   name: "Header",
 
-  components: { Multiselect },
+  components: {Multiselect},
 
   data() {
     return {
-      networkOption: { title: "Avalanch", network: "avax", img: "./avax.svg" },
+      networkOption: {title: "NEAR", network: "near", img: "./near.svg"},
 
       networkOptions: [
-        {title: "Avalanch", network: "avax", img: "./avax.svg"},
+        {title: "NEAR", network: "near", img: "./near.svg"},
+        {title: "Avalanche", network: "avax", img: "./avax.svg"},
         {title: "Polygon", network: "poly", img: "./poly.svg"},
         {title: "Ethereum", network: "eth", img: "./eth.svg"},
         {title: "Aeternity", network: "ae", img: "./ae.svg"},
-        {title: "NEAR", network: "near", img: "./near.svg"},
       ]
     };
   },
@@ -68,7 +68,7 @@ export default {
   },
 
   methods: {
-    customLabel: ({ title }) => title,
+    customLabel: ({title}) => title,
     handleChange(e) {
       eventBus.$emit("networkChange", e.network);
     },
@@ -76,7 +76,7 @@ export default {
       eventBus.$on("networkChange", network => {
         if (network) {
           this.networkOption = this.networkOptions.find(
-            x => x.network === network
+              x => x.network === network
           );
         }
       });
