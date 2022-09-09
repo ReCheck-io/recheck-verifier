@@ -1,6 +1,6 @@
 /* eslint-disable no-empty */
-import keccak256 from "keccak256";
-import { format, addMinutes } from "date-fns";
+import {keccak256} from "js-sha3";
+import {format, addMinutes} from "date-fns";
 
 import config from "../chain/config";
 
@@ -87,14 +87,17 @@ export function isValidAddress(currentNetwork, address) {
       );
     case "avax":
       return new RegExp(`^${config.avax.addressPrefix}[0-9a-fA-F]{40}$`).test(
-        address
+          address
       );
     case "ae":
       return (
-        new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(
-          address
-        ) || new RegExp(`^re_[0-9a-zA-Z]{41,}$`).test(address)
+          new RegExp(`^${config.ae.addressPrefix}[0-9a-zA-Z]{41,}$`).test(
+              address
+          ) || new RegExp(`^re_[0-9a-zA-Z]{41,}$`).test(address)
       );
+    case"near":
+      return new RegExp(`^[0-9a-f]{64}$`).test(address)//normal address
+          || (new RegExp(`^(?=.{2,64}$)(([a-z\\d]+[\\-_])*[a-z\\d]+\\.)*([a-z\\d]+[\\-_])*[a-z\\d]+$`).test(address));//custom address
     default:
       return false;
   }

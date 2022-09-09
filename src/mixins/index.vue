@@ -1,12 +1,13 @@
 <script>
 import Web3 from "web3";
-import { eventBus } from "../main";
-import { getHash, isNullAny, readFileAsync } from "../utils";
+import {eventBus} from "../main";
+import {getHash, isNullAny, readFileAsync} from "../utils";
 
-const { checkTrailHash: checkTrailHashAE } = require("../chain/chain-ae");
-const { checkTrailHash: checkTrailHashETH } = require("../chain/chain-eth");
-const { checkTrailHash: checkTrailHashPOLY } = require("../chain/chain-poly");
-const { checkTrailHash: checkTrailHashAVAX } = require("../chain/chain-avax");
+const {checkTrailHash: checkTrailHashAE} = require("../chain/chain-ae");
+const {checkTrailHash: checkTrailHashETH} = require("../chain/chain-eth");
+const {checkTrailHash: checkTrailHashPOLY} = require("../chain/chain-poly");
+const {checkTrailHash: checkTrailHashAVAX} = require("../chain/chain-avax");
+const {checkTrailHash: checkTrailHashNEAR} = require("../chain/chain-near");
 
 export default {
   data() {
@@ -116,6 +117,9 @@ export default {
           case "avax":
             checkTrailHashAVAX(trailHash, this.isBeta);
             break;
+          case "near":
+            checkTrailHashNEAR(trailHash, this.isBeta);
+            break;
         }
 
         eventBus.$emit("getUserData", userObj);
@@ -144,11 +148,7 @@ export default {
         return null;
       }
 
-      let trailHash = getHash(
-        dataId + this.senderId + actionType + this.recipientId
-      );
-
-      return trailHash;
+      return getHash(dataId + this.senderId + actionType + this.recipientId);
     },
 
     initWeb3: async function(idType) {

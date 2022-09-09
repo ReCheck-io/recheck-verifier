@@ -54,10 +54,11 @@ export default {
       networkOption: { title: "Avalanch", network: "avax", img: "./avax.svg" },
 
       networkOptions: [
-        { title: "Avalanch", network: "avax", img: "./avax.svg" },
-        { title: "Polygon", network: "poly", img: "./poly.svg" },
-        { title: "Ethereum", network: "eth", img: "./eth.svg" },
-        { title: "Aeternity", network: "ae", img: "./ae.svg" }
+        {title: "Avalanch", network: "avax", img: "./avax.svg"},
+        {title: "Polygon", network: "poly", img: "./poly.svg"},
+        {title: "Ethereum", network: "eth", img: "./eth.svg"},
+        {title: "Aeternity", network: "ae", img: "./ae.svg"},
+        {title: "NEAR", network: "near", img: "./near.svg"},
       ]
     };
   },
