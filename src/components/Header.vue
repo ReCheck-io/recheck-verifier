@@ -84,6 +84,8 @@ export default {
     toggleClass(newClass) {
       document.querySelector(".toggle-label-ae").classList.toggle(newClass);
       document.querySelector(".toggle-label-eth").classList.toggle(newClass);
+      document.querySelector(".toggle-label-avax").classList.toggle(newClass);
+      document.querySelector(".toggle-label-near").classList.toggle(newClass);
       document.querySelector(".toggle-label-poly").classList.toggle(newClass);
     }
   }

@@ -15,7 +15,7 @@ export default {
       file: {},
       isBeta: false,
       toggleValue: true,
-      currentNetwork: "poly",
+      currentNetwork: "near",
 
       web3: null,
 
