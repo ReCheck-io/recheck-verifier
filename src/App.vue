@@ -31,7 +31,11 @@
               style="margin-bottom: 12px;"
               @click="isVisibleTxDetails = !isVisibleTxDetails"
             >
-              Show Blockchain Details
+              {{
+                isVisibleTxDetails
+                  ? "Hide Blockchain Details"
+                  : "Show Blockchain Details"
+              }}
             </button>
           </div>
 
