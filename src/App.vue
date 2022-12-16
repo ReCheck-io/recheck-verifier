@@ -140,6 +140,7 @@ export default {
                 try {
                   currentValue = JSON.parse(value);
                 } catch (ignored) {
+                  //ignored
                 }
                 if (currentValue === "undefined") {
                   currentValue = false;
