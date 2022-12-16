@@ -44,9 +44,7 @@ const getContractForKeyPair = async secretKey => {
 };
 
 export const checkTrailHash = async (trailHash, isBeta = false) => {
-    if (isBeta) {
-        nearConfig = chainConfig.nearBeta;
-    }
+    nearConfig = isBeta ? chainConfig.nearBeta : chainConfig.near;
 
     let result = {
         recordId: "0",
