@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Header />
-    <Verify />
+    <Header/>
+    <Verify/>
     <viewer v-show="isModalVisible" @close="closeModal">
       <template #header>
-        <CircleIcon :isSuccess="chainData !== '' && userData !== ''" />
+        <CircleIcon :isSuccess="chainData !== '' && userData !== ''"/>
         <span v-if="chainData !== '' && userData !== ''">
           <h2>Successful validation!</h2>
         </span>
@@ -17,7 +17,7 @@
             <b>{{ network }}</b>
             blockchain on <b>{{ chainData.date }}</b> at
             <b>{{ chainData.time }} UTC</b> by <b>{{ userData.senderId }}</b
-            >.
+          >.
           </p>
           <p>
             Click below to see technical details about the recorded blockchain
@@ -26,15 +26,15 @@
 
           <div>
             <button
-              type="button"
-              class="btn sm"
-              style="margin-bottom: 12px;"
-              @click="isVisibleTxDetails = !isVisibleTxDetails"
+                type="button"
+                class="btn sm"
+                style="margin-bottom: 12px;"
+                @click="isVisibleTxDetails = !isVisibleTxDetails"
             >
               {{
                 isVisibleTxDetails
-                  ? "Hide Blockchain Details"
-                  : "Show Blockchain Details"
+                    ? "Hide Blockchain Details"
+                    : "Show Blockchain Details"
               }}
             </button>
           </div>
@@ -59,9 +59,9 @@ import Verify from "./components/Verify.vue";
 import Header from "./components/Header.vue";
 import viewer from "./components/modals/viewer.vue";
 import CircleIcon from "./components/circle-icon/index.vue";
-import { isNullAny, decodeUriParams, capitalizeFirstLetter } from "./utils";
-import { NETWORKS_LIST } from "./constants";
-import { eventBus } from "./main";
+import {isNullAny, decodeUriParams, capitalizeFirstLetter} from "./utils";
+import {NETWORKS_LIST} from "./constants";
+import {eventBus} from "./main";
 
 export default {
   name: "App",
@@ -134,7 +134,19 @@ export default {
               if (!isNullAny(document.getElementById(currentKey))) {
                 document.getElementById(currentKey).value = value;
               }
-              children[currentKey] = value;
+
+              let currentValue = value;
+              if (key === "isB") {
+                try {
+                  currentValue = JSON.parse(value);
+                } catch (ignored) {
+                }
+                if (currentValue === "undefined") {
+                  currentValue = false;
+                }
+              }
+
+              children[currentKey] = currentValue;
 
               // Toggle network change in the select menu
               if (currentKey === "currentNetwork") {
@@ -159,16 +171,16 @@ export default {
   },
 
   computed: {
-    actionType: function() {
+    actionType: function () {
       return this.userData.actionType && this.userData.actionType !== ""
-        ? capitalizeFirstLetter(this.userData?.actionType)
-        : "";
+          ? capitalizeFirstLetter(this.userData?.actionType)
+          : "";
     },
-    network: function() {
+    network: function () {
       return this.$root.$children[0].$children[1].currentNetwork &&
-        this.$root.$children[0].$children[1].currentNetwork !== ""
-        ? NETWORKS_LIST[this.$root.$children[0].$children[1].currentNetwork]
-        : "eth"; //TODO add polygon and avax
+      this.$root.$children[0].$children[1].currentNetwork !== ""
+          ? NETWORKS_LIST[this.$root.$children[0].$children[1].currentNetwork]
+          : "eth"; //TODO add polygon and avax
     }
   }
 };
@@ -178,6 +190,7 @@ export default {
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   font-family: "Roboto", Helvetica, Arial, sans-serif;
