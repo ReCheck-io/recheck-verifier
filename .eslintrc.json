@@ -1,0 +1,28 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended",
+    "plugin:prettier/@typescript-eslint"
+  ],
+  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+
+    "import/no-anonymous-default-export": "off",
+
+    // TAILWINDCSS
+    "tailwindcss/no-custom-classname": "off"
+  },
+  "globals": {
+    "React": "writable"
+  }
+}
