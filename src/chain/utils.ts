@@ -1,7 +1,6 @@
 import Web3 from "web3";
-import { utils as nearUtils, keyStores, connect, Contract } from "near-api-js";
-import { formatDate } from "@/utils";
 import { KeyPairString } from "near-api-js/lib/utils";
+import { utils as nearUtils, keyStores, connect, Contract } from "near-api-js";
 
 // Fix hash prefixes for any blockchain that uses "0x" or "ak_" or custom prefixes
 export function fixHashPrefix(hash: string, prefix: string = "0x"): string {
@@ -58,7 +57,7 @@ export async function getNearContract(config: any, privateKey: KeyPairString) {
 }
 
 // Helper to standardize trail hash result
-export function adaptTrailResult(result: any, timestampMultiplier = 1000) {
+export function adaptTrailResult(result: any) {
   if (result.length) {
     return {
       recordId: fixHashPrefix(result[0]),

@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatDate = (val) => {
+export const formatDate = (val: string) => {
   const parsedDate = new Date(parseFloat(val) * 1000);
 
   const newDate = format(
@@ -58,7 +58,7 @@ export function isValidAddress(
 }
 
 export function getHash(value: string): string {
-  return `0x${keccak256(value).toString("hex")}`;
+  return `0x${keccak256(value).toString()}`;
 }
 
 export function isValidEmail(emailAddress: string): boolean {
@@ -84,7 +84,9 @@ export function decodeUriParams() {
     const getVars = {};
     let tmp = "";
     vars.forEach(function (v) {
+      // @ts-ignore
       tmp = v.split("=");
+      // @ts-ignore
       if (tmp.length === 2) getVars[tmp[0]] = tmp[1];
     });
     return getVars;

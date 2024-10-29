@@ -92,7 +92,7 @@ export default function VerifyForm() {
     const t = toast({
       variant: "default",
       title: "Please wait...",
-      duration: undefined
+      duration: undefined,
     });
 
     const result = await verifyHash(data);
@@ -129,7 +129,8 @@ export default function VerifyForm() {
       toast({
         variant: "destructive",
         title: "Verification Failed",
-        description: "Verification on blockchain has failed. Could not find record with the given data.",
+        description:
+          "Verification on blockchain has failed. Could not find record with the given data.",
       });
     }
   };

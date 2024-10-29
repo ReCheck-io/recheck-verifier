@@ -17,11 +17,12 @@ export const checkTrailHash = async (
       nearConfig.privateKey as KeyPairString,
     );
 
+    // @ts-ignore
     const contractResponse: any = await contract.verifyTrail({
       trail_str: fixHashPrefix(trailHash),
     });
 
-    const result = adaptTrailResult(contractResponse, 1_000_000); // Adjust for NEAR's nanosecond timestamp
+    const result = adaptTrailResult(contractResponse);
 
     if (result.trailHash === "0") {
       return { data: null, status: false };
