@@ -10,7 +10,7 @@ export const checkTrailHash = async (
   isBeta = false,
 ): Promise<any> => {
   nearConfig = isBeta ? config.nearBeta : config.near;
-  console.log(nearConfig);
+
   try {
     const contract = await getNearContract(
       nearConfig,
