@@ -33,7 +33,7 @@ export default function Dropzone() {
 
         // Set the file and payload in the form state
         setFile(file);
-        setValue("dataId", getHash(payload)); // Store the hash of the payload
+        setValue("dataId", getHash(getHash(payload))); // Store the hash of the payload
       }
     },
     [setValue],
