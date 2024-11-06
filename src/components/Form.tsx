@@ -352,7 +352,7 @@ export default function VerifyForm() {
                 <span className="font-medium">{verificationData.time} </span> by{" "}
                 <span className="font-medium">{getValues("senderId")}</span>.
               </p>
-              <p className="font-medium">
+              <p className="mt-2 font-medium">
                 See below technical details about the recorded blockchain
                 transaction.
               </p>

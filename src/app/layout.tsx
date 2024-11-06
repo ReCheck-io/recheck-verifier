@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 
 const interSans = Inter({
   variable: "--font-inter",
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 
