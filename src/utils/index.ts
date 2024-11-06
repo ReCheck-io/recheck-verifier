@@ -69,27 +69,17 @@ export function capitalizeFirstLetter(string: string = ""): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function decodeUriParams() {
-  let newUri = "";
+export function decodeUriParams(): Record<string, string> | null {
   try {
-    newUri = decodeURI(window.location.href);
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
-
-  const uri = newUri.split("?");
-  if (uri.length === 2) {
-    const vars = uri[1].split("&");
-    const getVars = {};
-    let tmp = "";
-    vars.forEach(function (v) {
-      // @ts-ignore
-      tmp = v.split("=");
-      // @ts-ignore
-      if (tmp.length === 2) getVars[tmp[0]] = tmp[1];
+    const params = new URLSearchParams(window.location.search);
+    const result: Record<string, string> = {};
+    params.forEach((value, key) => {
+      result[key] = value;
     });
-    return getVars;
+    return result;
+  } catch (error) {
+    console.error("Failed to decode URI parameters:", error);
+    return null;
   }
 }
 

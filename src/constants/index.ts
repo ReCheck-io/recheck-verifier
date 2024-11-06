@@ -1,14 +1,11 @@
 export const FILE_ACTIONS = [
-  { title: "Uploaded", desc: "Uploaded on chain", actionType: "upload" },
-  { title: "Signed", desc: "Signed by someone", actionType: "sign" },
-  { title: "Shared", desc: "Shared with someone", actionType: "share" },
-  { title: "Email Shared", desc: "Shared by email", actionType: "email" },
-  { title: "Decrypted", desc: "Decrypted by someone", actionType: "verify" },
-  {
-    title: "Downloaded",
-    desc: "Downloaded by someone",
-    actionType: "download",
-  },
+  { title: "Uploaded", actionType: "upload" },
+  { title: "Downloaded", actionType: "download" },
+  { title: "Decrypted (Opened)", actionType: "verify" },
+  { title: "Signed", actionType: "sign" },
+
+  { title: "Shared", actionType: "share" },
+  { title: "Email Shared", actionType: "email" },
 ];
 
 export const NETWORK_OPTIONS = [
@@ -49,3 +46,21 @@ export const TIMELINE_DATA = [
       "If applicable, you must enter recipient ID or use the MetaMask button for yours.",
   },
 ];
+
+export const LABEL_MAP: Record<string, string> = {
+  upload: "User ID",
+  download: "User ID",
+  verify: "User ID",
+  sign: "User ID",
+  share: "Sender ID",
+  email: "Sender ID",
+};
+
+export const QUERY_MAP = {
+  isB: "isBeta",
+  net: "network",
+  type: "actionType",
+  dId: "dataId",
+  sId: "senderId",
+  rId: "recipientId",
+} as const;

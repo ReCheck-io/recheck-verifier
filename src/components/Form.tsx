@@ -27,9 +27,14 @@ import {
 } from "@/components/ui";
 import Dropzone from "@/components/Dropzone";
 import { useNetworkState } from "@/contexts";
-import { FILE_ACTIONS, NETWORK_OPTIONS } from "@/constants";
 import { useVerifyHash, FormValues, useToast } from "@/hooks";
 import { capitalizeFirstLetter, decodeUriParams, TxInfo } from "@/utils";
+import {
+  QUERY_MAP,
+  LABEL_MAP,
+  FILE_ACTIONS,
+  NETWORK_OPTIONS,
+} from "@/constants";
 
 export default function VerifyForm() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,23 +60,12 @@ export default function VerifyForm() {
 
   const watchActionType = watch("actionType");
 
-  const queryMap: Record<string, keyof FormValues | "network"> = {
-    isB: "isBeta",
-    net: "network",
-    type: "actionType",
-    dId: "dataId",
-    sId: "senderId",
-    rId: "recipientId",
-  };
-
   useEffect(() => {
     const params = decodeUriParams();
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
-        const mappedKey = queryMap[key];
-
-        if (!mappedKey) return;
+        const mappedKey = QUERY_MAP[key as keyof typeof QUERY_MAP];
 
         if (mappedKey === "network") {
           const newNetwork = NETWORK_OPTIONS.find((x) => x.network === value);
@@ -79,9 +73,15 @@ export default function VerifyForm() {
             setSelectedNetwork(newNetwork);
           }
         } else if (mappedKey === "isBeta") {
-          setValue("isBeta", JSON.parse(value as string) || false);
-        } else {
-          setValue(mappedKey, value as string);
+          const booleanValue = value.toLowerCase() === "true";
+          if (getValues("isBeta") !== booleanValue) {
+            setValue("isBeta", booleanValue);
+          }
+        } else if (mappedKey) {
+          const currentValue = getValues(mappedKey as keyof FormValues);
+          if (currentValue !== value) {
+            setValue(mappedKey as keyof FormValues, value as string);
+          }
         }
       });
     }
@@ -213,7 +213,11 @@ export default function VerifyForm() {
                     <Select onValueChange={field.onChange}>
                       <SelectTrigger className="h-11 bg-white text-base">
                         {watchActionType ? (
-                          <span className="capitalize">{watchActionType}</span>
+                          <span className="capitalize">
+                            {FILE_ACTIONS.find(
+                              (option) => option.actionType === watchActionType,
+                            )?.title || "Select Action"}
+                          </span>
                         ) : (
                           <SelectValue placeholder="Select Action" />
                         )}
@@ -242,11 +246,14 @@ export default function VerifyForm() {
                 name="senderId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Sender ID</FormLabel>
+                    <FormLabel>
+                      {LABEL_MAP[watchActionType] || "User ID"}
+                    </FormLabel>
+
                     <FormControl>
                       <Input
                         className="text-base"
-                        placeholder="Sender ID"
+                        placeholder={LABEL_MAP[watchActionType] || "User ID"}
                         {...field}
                       />
                     </FormControl>
@@ -257,7 +264,7 @@ export default function VerifyForm() {
             )}
 
             {watchActionType &&
-              !["email", "upload", "sign", "download"].includes(
+              !["email", "upload", "sign", "download", "verify"].includes(
                 watchActionType,
               ) && (
                 <FormField
@@ -333,7 +340,11 @@ export default function VerifyForm() {
               <p>
                 This item is{" "}
                 <span className="font-medium">
-                  {capitalizeFirstLetter(verificationData.actionType)}ed
+                  {
+                    FILE_ACTIONS.find(
+                      (x) => x.actionType === verificationData.actionType,
+                    )?.title
+                  }
                 </span>{" "}
                 on <span className="font-medium">{selectedNetwork.title}</span>{" "}
                 blockchain on{" "}
@@ -374,7 +385,7 @@ export default function VerifyForm() {
                   </div>
                   <div className="flex flex-col py-2">
                     <dt className="text-base font-medium leading-6 text-gray-900">
-                      Trail Hash Signature:
+                      Trail Hash Signature Hash:
                     </dt>
                     <dd className="text-base leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       {verificationData.trailHashSigHash}
