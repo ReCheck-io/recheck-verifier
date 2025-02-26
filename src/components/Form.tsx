@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 
 import {
@@ -42,8 +41,7 @@ export default function VerifyForm() {
 
   const { toast } = useToast();
   const { verifyHash } = useVerifyHash();
-  const { setSelectedNetwork, networkOptions, selectedNetwork } =
-    useNetworkState();
+  const { setSelectedNetwork, selectedNetwork } = useNetworkState();
 
   const form = useForm<FormValues>({
     mode: "onChange",
@@ -158,50 +156,6 @@ export default function VerifyForm() {
                 </FormItem>
               )}
             />
-
-            <FormItem>
-              <FormLabel>Select Network</FormLabel>
-              <FormControl>
-                <Select
-                  value={selectedNetwork.network}
-                  onValueChange={(value) => {
-                    const newNetwork = networkOptions.find(
-                      (x) => x.network === value,
-                    );
-                    if (
-                      newNetwork &&
-                      newNetwork.network !== selectedNetwork.network
-                    ) {
-                      setSelectedNetwork(newNetwork);
-                    }
-                  }}
-                >
-                  <SelectTrigger className="mb-4 h-11 bg-white text-base">
-                    <SelectValue placeholder="Select Network" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {networkOptions.map((option) => (
-                      <SelectItem
-                        key={option.network}
-                        value={option.network}
-                        className="text-base"
-                      >
-                        <div className="flex items-center">
-                          <Image
-                            src={option.img}
-                            alt={option.title}
-                            className="mr-2 size-6"
-                            height={24}
-                            width={24}
-                          />
-                          {option.title}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
 
             <FormField
               name="actionType"
@@ -399,7 +353,7 @@ export default function VerifyForm() {
       </Dialog>
 
       <p className="my-8">
-        Copyright &copy; {new Date().getFullYear()} - ReCheck B.V.
+        Copyright &copy; {new Date().getFullYear()} - HubContracts
       </p>
     </div>
   );

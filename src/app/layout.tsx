@@ -15,8 +15,8 @@ const interSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ReCheck Verifier",
-  description: "ReCheck Transaction Verifier",
+  title: "HubContracts Verifier",
+  description: "HubContracts Transaction Verifier",
 };
 
 export default function RootLayout({

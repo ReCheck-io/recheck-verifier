@@ -13,18 +13,18 @@ export const NETWORK_OPTIONS = [
   // { title: "Ethereum", network: "eth", img: "/eth.svg" },
   // { title: "Polygon", network: "poly", img: "/poly.svg" },
   // { title: "Aeternity", network: "ae", img: "/ae.svg" },
-  { title: "NEAR", network: "near", img: "/near.svg" },
+  // { title: "NEAR", network: "near", img: "/near.svg" },
   { title: "Concordium", network: "ccd", img: "/ccd.svg" },
 ];
 
 export const DEFAULT_NETWORK = NETWORK_OPTIONS.find((x) => x.network === "ccd");
 
 export const TIMELINE_DATA = [
-  {
-    title: "Select network",
-    description:
-      "From the switch button select in which network you want to verify.",
-  },
+  // {
+  //   title: "Select network",
+  //   description:
+  //     "From the switch button select in which network you want to verify.",
+  // },
   {
     title: "Select file",
     description:
